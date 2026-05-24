@@ -1,11 +1,551 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>我的个人网站</title>
-  </head>
-  <body>
-    <h1>你好，世界！</h1>
-    <p>这是我的第一个免费网站。</p>
-  </body>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>BioInfoHub · 生物信息学工具与方法</title>
+    <!-- 引入 Font Awesome 6 (免费图标库) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- 使用 Google Fonts 提升字体质感 -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f5f9ff;
+            color: #1a2c3e;
+            line-height: 1.5;
+            scroll-behavior: smooth;
+        }
+
+        /* 自定义滚动条 */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #e2e8f0;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2c7da0;
+            border-radius: 10px;
+        }
+
+        /* 容器 */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* 头部区域 */
+        .hero {
+            background: linear-gradient(135deg, #0b3b4f 0%, #1f6e8c 100%);
+            color: white;
+            padding: 3rem 0 4rem 0;
+            border-radius: 0 0 2rem 2rem;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+        }
+        .hero h1 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            margin-bottom: 0.5rem;
+        }
+        .hero h1 i {
+            margin-right: 12px;
+            color: #9cd3e8;
+        }
+        .hero .tagline {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 1rem;
+            font-weight: 400;
+        }
+        .hero .bio-badge {
+            background: rgba(255,255,255,0.15);
+            display: inline-block;
+            padding: 0.4rem 1rem;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            backdrop-filter: blur(4px);
+        }
+        .hero .bio-badge i {
+            margin-right: 6px;
+        }
+
+        /* 导航锚点 (简单平滑) */
+        .nav-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.8rem;
+            margin-top: 1.8rem;
+            border-top: 1px solid rgba(255,255,255,0.2);
+            padding-top: 1.5rem;
+        }
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: 0.2s;
+            font-size: 1rem;
+            opacity: 0.85;
+        }
+        .nav-links a:hover {
+            opacity: 1;
+            transform: translateY(-2px);
+        }
+        .nav-links i {
+            margin-right: 8px;
+        }
+
+        /* 通用section样式 */
+        section {
+            margin-bottom: 3.5rem;
+        }
+        .section-title {
+            font-size: 1.9rem;
+            font-weight: 700;
+            color: #0f4c5f;
+            border-left: 6px solid #2c7da0;
+            padding-left: 1rem;
+            margin-bottom: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .section-title i {
+            color: #2c7da0;
+            font-size: 1.8rem;
+        }
+
+        /* 搜索框 */
+        .search-wrapper {
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: flex-end;
+        }
+        .search-box {
+            background: white;
+            border-radius: 60px;
+            padding: 0.5rem 1.2rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            border: 1px solid #dfe9f0;
+        }
+        .search-box i {
+            color: #5f9db2;
+            font-size: 1.2rem;
+        }
+        .search-box input {
+            border: none;
+            outline: none;
+            font-size: 1rem;
+            width: 220px;
+            padding: 8px 0;
+            font-family: inherit;
+            background: transparent;
+        }
+        .search-box input::placeholder {
+            color: #95adc0;
+        }
+
+        /* 卡片网格 */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.8rem;
+        }
+        .card {
+            background: white;
+            border-radius: 1.25rem;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.03), 0 2px 6px rgba(0, 0, 0, 0.05);
+            transition: all 0.25s ease;
+            overflow: hidden;
+            border: 1px solid #e9f0f5;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 30px -12px rgba(31, 110, 140, 0.2);
+            border-color: #cbe3ef;
+        }
+        .card-content {
+            padding: 1.6rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .card-icon {
+            font-size: 2.4rem;
+            color: #2c7da0;
+            margin-bottom: 0.8rem;
+        }
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: #0f4c5f;
+            letter-spacing: -0.2px;
+        }
+        .card-desc {
+            color: #2c3e44;
+            font-size: 0.95rem;
+            margin: 0.5rem 0 1rem 0;
+            line-height: 1.45;
+            flex: 1;
+        }
+        .card-link {
+            margin-top: 0.8rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-decoration: none;
+            color: #1f6e8c;
+            transition: gap 0.2s;
+        }
+        .card-link i {
+            font-size: 0.85rem;
+        }
+        .card-link:hover {
+            gap: 12px;
+            color: #0b4b60;
+            text-decoration: underline;
+        }
+
+        /* 方法卡片微调 */
+        .method-tag {
+            background: #eef4fc;
+            border-radius: 30px;
+            padding: 0.2rem 0.8rem;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #1f6e8c;
+            width: fit-content;
+            margin-top: 0.5rem;
+        }
+
+        /* 关于区域 */
+        .about-card {
+            background: white;
+            border-radius: 1.5rem;
+            padding: 1.8rem 2rem;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.02);
+            border: 1px solid #e4edf3;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            align-items: center;
+        }
+        .about-text {
+            flex: 2;
+        }
+        .about-text h3 {
+            font-size: 1.5rem;
+            color: #0f4c5f;
+            margin-bottom: 0.7rem;
+        }
+        .about-text p {
+            margin-bottom: 1rem;
+            color: #2c4a5e;
+        }
+        .contact-icons {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 1.2rem;
+            flex-wrap: wrap;
+        }
+        .contact-icons a {
+            color: #2c7da0;
+            font-size: 1.4rem;
+            transition: 0.2s;
+            background: #eef2f7;
+            width: 44px;
+            height: 44px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            text-decoration: none;
+        }
+        .contact-icons a:hover {
+            background: #d4e5ef;
+            transform: translateY(-3px);
+            color: #145c74;
+        }
+        .about-avatar {
+            flex: 1;
+            text-align: center;
+        }
+        .about-avatar i {
+            font-size: 5rem;
+            color: #2c7da0;
+            background: #e3f0f5;
+            padding: 1rem;
+            border-radius: 60%;
+        }
+
+        /* 页脚 */
+        .footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding: 2rem 1rem;
+            border-top: 1px solid #dce9f0;
+            color: #4b6f82;
+            font-size: 0.85rem;
+        }
+
+        /* 无结果提示 */
+        .no-result {
+            text-align: center;
+            padding: 2rem;
+            background: white;
+            border-radius: 1.5rem;
+            color: #6b8da8;
+            grid-column: 1 / -1;
+        }
+
+        /* 响应式 */
+        @media (max-width: 680px) {
+            .container {
+                padding: 0 18px;
+            }
+            .hero h1 {
+                font-size: 2rem;
+            }
+            .section-title {
+                font-size: 1.5rem;
+            }
+            .search-wrapper {
+                justify-content: stretch;
+            }
+            .search-box {
+                width: 100%;
+            }
+            .search-box input {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="hero">
+    <div class="container">
+        <h1>
+            <i class="fas fa-dna"></i> BioInfoHub
+        </h1>
+        <div class="tagline">
+            生物信息学工具 · 核心方法 · 研究资源
+        </div>
+        <div class="bio-badge">
+            <i class="fas fa-microscope"></i> 个人知识库 | 持续更新
+        </div>
+        <div class="nav-links">
+            <a href="#tools"><i class="fas fa-toolbox"></i> 工具集</a>
+            <a href="#methods"><i class="fas fa-brain"></i> 分析方法</a>
+            <a href="#about"><i class="fas fa-user-astronaut"></i> 关于我</a>
+            <a href="mailto:bioinfo@personalhub.com"><i class="fas fa-envelope"></i> 联系</a>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <!-- 工具区 (带搜索过滤) -->
+    <section id="tools">
+        <div class="section-title">
+            <i class="fas fa-toolbox"></i>
+            <span>🔧 精选生物信息学工具</span>
+        </div>
+        <div class="search-wrapper">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="toolSearchInput" placeholder="搜索工具名称或描述..." autocomplete="off">
+            </div>
+        </div>
+        <div id="toolsContainer" class="cards-grid">
+            <!-- 工具卡片列表 (由 JS 动态渲染 + 静态构建后备, 但直接内嵌并用js渲染确保筛选) 
+                 更好的维护性: 用js数组生成 + 筛选。为了展示可靠，直接内置工具数据并动态生成。-->
+        </div>
+    </section>
+
+    <!-- 方法区 (静态卡片, 无需筛选但保持风格统一) -->
+    <section id="methods">
+        <div class="section-title">
+            <i class="fas fa-brain"></i>
+            <span>📖 核心生物信息学方法</span>
+        </div>
+        <div class="cards-grid" id="methodsContainer">
+            <!-- 动态生成方法卡片 -->
+        </div>
+    </section>
+
+    <!-- 关于/联系部分 -->
+    <section id="about">
+        <div class="section-title">
+            <i class="fas fa-user-circle"></i>
+            <span>👨‍💻 关于站长 & 资源共建</span>
+        </div>
+        <div class="about-card">
+            <div class="about-text">
+                <h3>Hi，我是林逸轩 <span style="font-size:1.2rem;">🧬</span></h3>
+                <p>计算生物学博士生，深耕基因组学与单细胞数据分析。日常热衷发掘高效的开源生物信息工具，并整理分析流程。<br>
+                这个网站完全免费，旨在为同行及入门者提供一个可靠的工具索引与方法概览。所有推荐均来自社区广泛使用的项目，无商业推广。</p>
+                <p><i class="fas fa-graduation-cap"></i> 主要兴趣: 算法开发 | 转录调控 | 微生物组学</p>
+                <div class="contact-icons">
+                    <a href="https://github.com/bioinfo-hub" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i></a>
+                    <a href="https://twitter.com/bioinfo_lab" target="_blank" rel="noopener noreferrer"><i class="fab fa-twitter"></i></a>
+                    <a href="mailto:lin.yixuan@biohub.org"><i class="fas fa-envelope"></i></a>
+                    <a href="#"><i class="fab fa-google-scholar"></i></a>
+                </div>
+                <p style="margin-top: 1rem; font-size: 0.85rem;"><i class="fas fa-hand-peace"></i> 欢迎邮件交流 / 推荐优质工具，共同完善资源库。</p>
+            </div>
+            <div class="about-avatar">
+                <i class="fas fa-dna"></i>
+                <p style="margin-top: 0.6rem; font-weight: 500;">#Bioinformatics<br>#OpenScience</p>
+            </div>
+        </div>
+    </section>
+</div>
+
+<footer class="footer">
+    <div class="container">
+        <i class="fas fa-chart-line"></i> 开源分享 · 自由访问 · 持续更新<br>
+        © 2025 BioInfoHub | 所有外部链接归原作者所有 | 无域名纯静态站点
+    </div>
+</footer>
+
+<script>
+    // ----------------------------------------------
+    // 工具数据库 (名称, 描述, 链接, 图标类)
+    // ----------------------------------------------
+    const toolsData = [
+        { name: "BLAST", desc: "基础局部比对搜索工具，用于核酸/蛋白序列相似性搜索，全球最经典的比对服务。", link: "https://blast.ncbi.nlm.nih.gov", icon: "fas fa-search" },
+        { name: "SAMtools", desc: "处理高通量测序SAM/BAM/CRAM格式的瑞士军刀，支持排序、索引、变异 calling。", link: "http://www.htslib.org/", icon: "fas fa-scissors" },
+        { name: "BWA", desc: "Burrows-Wheeler Aligner，高效的短读段比对工具，尤其适合二代测序与参考基因组比对。", link: "http://bio-bwa.sourceforge.net/", icon: "fas fa-code-branch" },
+        { name: "GATK", desc: "基因组分析工具包，行业标准的变异检测(SNP/Indel)与预处理最佳实践流程。", link: "https://gatk.broadinstitute.org/", icon: "fas fa-chart-line" },
+        { name: "Trinity", desc: "无参转录组组装工具，高效 reconstruct 全长转录本，适合RNA-Seq de novo组装。", link: "https://github.com/trinityrnaseq/trinityrnaseq", icon: "fas fa-project-diagram" },
+        { name: "DESeq2", desc: "差异基因表达分析R包，基于负二项分布模型，稳健处理count数据。", link: "https://bioconductor.org/packages/DESeq2", icon: "fab fa-r-project" },
+        { name: "STAR", desc: "超快速RNA-Seq比对器，具备高灵敏度和 splice-aware 对齐能力。", link: "https://github.com/alexdobin/STAR", icon: "fas fa-star" },
+        { name: "Cell Ranger", desc: "10x Genomics单细胞分析官方流程，从原始数据到基因表达矩阵。", link: "https://www.10xgenomics.com/support/software/cell-ranger", icon: "fas fa-microscope" },
+        { name: "IGV", desc: "交互式基因组浏览器，可视化比对、突变、CNV等，支持本地和在线数据。", link: "https://igv.org/", icon: "fas fa-chart-simple" },
+        { name: "FastQC", desc: "高通量测序原始数据的质控工具，生成全面的质量报告。", link: "https://www.bioinformatics.babraham.ac.uk/projects/fastqc/", icon: "fas fa-chart-bar" }
+    ];
+
+    // 方法数据
+    const methodsData = [
+        { name: "序列比对算法", desc: "包含Needleman-Wunsch(全局)、Smith-Waterman(局部)及BWT索引的高效映射策略，是比对工具的理论核心。", link: "https://en.wikipedia.org/wiki/Sequence_alignment", tag: "基础核心", icon: "fas fa-code-branch" },
+        { name: "隐马尔可夫模型 (HMM)", desc: "用于蛋白质家族预测、跨膜结构域识别和基因预测，如HMMER、Pfam数据库。", link: "https://www.nature.com/articles/nbt1004-1315", tag: "概率图模型", icon: "fas fa-chart-network" },
+        { name: "基因组 de novo 组装", desc: "从短读长重建完整基因组，常用算法：de Bruijn图 (SPAdes, SOAPdenovo) 与OLC。", link: "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5798863/", tag: "组装算法", icon: "fas fa-puzzle-piece" },
+        { name: "变异检测流程", desc: "从BAM文件中识别SNV/Indel, GATK最佳实践、FreeBayes等，联合call set策略。", link: "https://gatk.broadinstitute.org/hc/en-us", tag: "遗传变异", icon: "fas fa-disease" },
+        { name: "RNA-Seq 定量与差异分析", desc: "包括转录本定量(Kallisto, Salmon)、差异表达(DESeq2, edgeR)和富集分析。", link: "https://www.nature.com/articles/nprot.2013.099", tag: "转录组学", icon: "fas fa-chart-line" },
+        { name: "单细胞数据分析", desc: "降维聚类(Seurat, Scanpy)、拟时序分析及细胞通讯，揭秘细胞异质性。", link: "https://satijalab.org/seurat/", tag: "前沿技术", icon: "fas fa-cells" },
+        { name: "表观组学分析", desc: "ChIP-seq/ATAC-seq峰识别(MACS2)、motif富集分析及染色质互作。", link: "https://www.encodeproject.org/", tag: "表观遗传", icon: "fas fa-dna" },
+        { name: "宏基因组分析", desc: "物种注释、功能基因 profiling (MetaPhlAn, HUMAnN)，以及binning组装。", link: "https://www.nature.com/articles/s41587-021-00979-0", tag: "微生物组", icon: "fas fa-bacteria" }
+    ];
+
+    // 渲染工具列表 (支持动态筛选)
+    function renderTools(filterText = "") {
+        const container = document.getElementById("toolsContainer");
+        if (!container) return;
+        const lowerFilter = filterText.toLowerCase().trim();
+        let filtered = toolsData;
+        if (lowerFilter !== "") {
+            filtered = toolsData.filter(tool => 
+                tool.name.toLowerCase().includes(lowerFilter) || 
+                tool.desc.toLowerCase().includes(lowerFilter)
+            );
+        }
+
+        if (filtered.length === 0) {
+            container.innerHTML = `<div class="no-result"><i class="fas fa-info-circle"></i> 没有找到相关工具，试试其他关键词～</div>`;
+            return;
+        }
+
+        container.innerHTML = filtered.map(tool => `
+            <div class="card">
+                <div class="card-content">
+                    <div class="card-icon"><i class="${tool.icon}"></i></div>
+                    <div class="card-title">${escapeHtml(tool.name)}</div>
+                    <div class="card-desc">${escapeHtml(tool.desc)}</div>
+                    <a href="${tool.link}" class="card-link" target="_blank" rel="noopener noreferrer">
+                        访问官网 <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        `).join("");
+    }
+
+    // 渲染方法卡片 (无筛选，但统一风格)
+    function renderMethods() {
+        const container = document.getElementById("methodsContainer");
+        if (!container) return;
+        container.innerHTML = methodsData.map(method => `
+            <div class="card">
+                <div class="card-content">
+                    <div class="card-icon"><i class="${method.icon}"></i></div>
+                    <div class="card-title">${escapeHtml(method.name)}</div>
+                    ${method.tag ? `<div class="method-tag"><i class="fas fa-tag"></i> ${escapeHtml(method.tag)}</div>` : ''}
+                    <div class="card-desc">${escapeHtml(method.desc)}</div>
+                    <a href="${method.link}" class="card-link" target="_blank" rel="noopener noreferrer">
+                        深入理解 <i class="fas fa-book-open"></i>
+                    </a>
+                </div>
+            </div>
+        `).join("");
+    }
+
+    // 简单的防XSS
+    function escapeHtml(str) {
+        return str.replace(/[&<>]/g, function(m) {
+            if (m === '&') return '&amp;';
+            if (m === '<') return '&lt;';
+            if (m === '>') return '&gt;';
+            return m;
+        }).replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, function(c) {
+            return c;
+        });
+    }
+
+    // 初始化页面 + 搜索监听
+    document.addEventListener("DOMContentLoaded", function() {
+        renderTools("");
+        renderMethods();
+
+        const searchInput = document.getElementById("toolSearchInput");
+        if (searchInput) {
+            searchInput.addEventListener("input", function(e) {
+                renderTools(e.target.value);
+            });
+        }
+    });
+
+    // 平滑锚点滚动增强 (可选)
+    document.querySelectorAll('.nav-links a, .hero .nav-links a').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            const href = this.getAttribute('href');
+            if (href && href.startsWith('#')) {
+                e.preventDefault();
+                const targetId = href.substring(1);
+                const targetElem = document.getElementById(targetId);
+                if (targetElem) {
+                    targetElem.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }
+        });
+    });
+</script>
+</body>
 </html>
