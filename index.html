@@ -4,17 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>EnzyMine · 酶挖掘与酶改造设计工坊</title>
-    <!-- Font Awesome 6 (免费图标库) -->
+    <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Inter', sans-serif;
             background: #f4faf7;
@@ -22,26 +17,10 @@
             line-height: 1.5;
             scroll-behavior: smooth;
         }
-
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #d4e6df;
-            border-radius: 10px;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #2c8c6e;
-            border-radius: 10px;
-        }
-
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 24px;
-        }
-
-        /* 头部区域 */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #d4e6df; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb { background: #2c8c6e; border-radius: 10px; }
+        .container { max-width: 1400px; margin: 0 auto; padding: 0 24px; }
         .hero {
             background: linear-gradient(135deg, #0e4b38 0%, #1f7c5c 100%);
             color: white;
@@ -50,22 +29,9 @@
             margin-bottom: 2.5rem;
             box-shadow: 0 8px 20px rgba(0,0,0,0.08);
         }
-        .hero h1 {
-            font-size: 2.8rem;
-            font-weight: 700;
-            letter-spacing: -0.01em;
-            margin-bottom: 0.5rem;
-        }
-        .hero h1 i {
-            margin-right: 12px;
-            color: #b2ebd4;
-        }
-        .hero .tagline {
-            font-size: 1.2rem;
-            opacity: 0.9;
-            margin-bottom: 1rem;
-            font-weight: 400;
-        }
+        .hero h1 { font-size: 2.8rem; font-weight: 700; margin-bottom: 0.5rem; }
+        .hero h1 i { margin-right: 12px; color: #b2ebd4; }
+        .hero .tagline { font-size: 1.2rem; opacity: 0.9; margin-bottom: 1rem; }
         .hero .bio-badge {
             background: rgba(255,255,255,0.15);
             display: inline-block;
@@ -87,20 +53,10 @@
             text-decoration: none;
             font-weight: 500;
             transition: 0.2s;
-            font-size: 1rem;
-            opacity: 0.85;
         }
-        .nav-links a:hover {
-            opacity: 1;
-            transform: translateY(-2px);
-        }
-        .nav-links i {
-            margin-right: 8px;
-        }
-
-        section {
-            margin-bottom: 3.5rem;
-        }
+        .nav-links a:hover { opacity: 1; transform: translateY(-2px); }
+        .nav-links i { margin-right: 8px; }
+        section { margin-bottom: 3.5rem; }
         .section-title {
             font-size: 1.9rem;
             font-weight: 700;
@@ -112,12 +68,58 @@
             align-items: center;
             gap: 10px;
         }
-        .section-title i {
-            color: #2c8c6e;
-            font-size: 1.8rem;
+        .subsection-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #1c6c52;
+            margin: 1.5rem 0 1rem 0;
+            padding-left: 0.8rem;
+            border-left: 4px solid #2c8c6e;
         }
-
-        /* 工具分类筛选器 */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.8rem;
+        }
+        .card {
+            background: white;
+            border-radius: 1.25rem;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.03), 0 2px 6px rgba(0,0,0,0.05);
+            transition: all 0.25s ease;
+            border: 1px solid #e0f0e9;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 20px 30px -12px rgba(31,110,80,0.2); border-color: #bfdecb; }
+        .card-content { padding: 1.6rem; flex: 1; display: flex; flex-direction: column; }
+        .card-icon { font-size: 2.4rem; color: #2c8c6e; margin-bottom: 0.8rem; }
+        .card-title { font-size: 1.4rem; font-weight: 700; margin-bottom: 0.5rem; color: #0f5e48; }
+        .card-desc { color: #2b5a4a; font-size: 0.9rem; margin: 0.5rem 0 0.75rem 0; line-height: 1.45; flex: 1; }
+        .method-steps, .method-references { font-size: 0.85rem; margin-top: 0.5rem; color: #3c7864; border-top: 1px dashed #c4e0d4; padding-top: 0.6rem; }
+        .method-steps i, .method-references i { margin-right: 6px; color: #2c8c6e; width: 18px; }
+        .tool-tag, .method-tag {
+            background: #e2f0ea;
+            border-radius: 30px;
+            padding: 0.2rem 0.8rem;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #1f7c5c;
+            width: fit-content;
+            margin-bottom: 0.5rem;
+        }
+        .card-link {
+            margin-top: 0.8rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-decoration: none;
+            color: #1f7c5c;
+            transition: gap 0.2s;
+        }
+        .card-link:hover { gap: 12px; text-decoration: underline; }
         .tool-category-bar {
             display: flex;
             flex-wrap: wrap;
@@ -135,21 +137,10 @@
             font-weight: 500;
             color: #1f7c5c;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: 0.2s;
         }
-        .cat-btn i {
-            margin-right: 6px;
-        }
-        .cat-btn.active, .cat-btn:hover {
-            background: #2c8c6e;
-            border-color: #2c8c6e;
-            color: white;
-        }
-        .search-wrapper {
-            margin-bottom: 2rem;
-            display: flex;
-            justify-content: flex-end;
-        }
+        .cat-btn.active, .cat-btn:hover { background: #2c8c6e; border-color: #2c8c6e; color: white; }
+        .search-wrapper { margin-bottom: 2rem; display: flex; justify-content: flex-end; }
         .search-box {
             background: white;
             border-radius: 60px;
@@ -157,122 +148,29 @@
             display: inline-flex;
             align-items: center;
             gap: 10px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
             border: 1px solid #caded5;
         }
-        .search-box i {
-            color: #3d9b7a;
-        }
-        .search-box input {
-            border: none;
-            outline: none;
-            font-size: 1rem;
-            width: 240px;
-            padding: 8px 0;
-            font-family: inherit;
-            background: transparent;
-        }
-
-        .cards-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 1.8rem;
-        }
-        .card {
-            background: white;
-            border-radius: 1.25rem;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.03), 0 2px 6px rgba(0, 0, 0, 0.05);
-            transition: all 0.25s ease;
-            border: 1px solid #e0f0e9;
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-        }
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 30px -12px rgba(31, 110, 80, 0.2);
-            border-color: #bfdecb;
-        }
-        .card-content {
-            padding: 1.6rem;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-        }
-        .card-icon {
-            font-size: 2.4rem;
-            color: #2c8c6e;
-            margin-bottom: 0.8rem;
-        }
-        .card-title {
-            font-size: 1.4rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-            color: #0f5e48;
-        }
-        .card-desc {
-            color: #2b5a4a;
-            font-size: 0.9rem;
-            margin: 0.5rem 0 1rem 0;
-            line-height: 1.45;
-            flex: 1;
-        }
-        .card-link {
-            margin-top: 0.8rem;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: 600;
-            font-size: 0.85rem;
-            text-decoration: none;
-            color: #1f7c5c;
-            transition: gap 0.2s;
-        }
-        .card-link:hover {
-            gap: 12px;
-            color: #0b4e3a;
-            text-decoration: underline;
-        }
-        .method-tag, .tool-tag {
-            background: #e2f0ea;
-            border-radius: 30px;
-            padding: 0.2rem 0.8rem;
-            font-size: 0.7rem;
-            font-weight: 600;
-            color: #1f7c5c;
-            width: fit-content;
-            margin-top: 0.5rem;
-        }
-
+        .search-box input { border: none; outline: none; font-size: 1rem; width: 240px; background: transparent; }
         .about-card {
             background: white;
             border-radius: 1.5rem;
             padding: 1.8rem 2rem;
-            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.02);
             border: 1px solid #e0efe8;
             display: flex;
             flex-wrap: wrap;
             gap: 2rem;
             align-items: center;
         }
-        .about-text {
-            flex: 2;
-        }
-        .about-text h3 {
-            font-size: 1.5rem;
-            color: #0f5e48;
-            margin-bottom: 0.7rem;
-        }
+        .about-text { flex: 2; }
         .contact-icons {
             display: flex;
             gap: 1.5rem;
-            margin-top: 1.2rem;
+            margin-top: 1rem;
             flex-wrap: wrap;
         }
         .contact-icons a {
             color: #2c8c6e;
             font-size: 1.4rem;
-            transition: 0.2s;
             background: #eef5f1;
             width: 44px;
             height: 44px;
@@ -282,114 +180,71 @@
             border-radius: 50%;
             text-decoration: none;
         }
-        .contact-icons a:hover {
-            background: #d4e8df;
-            transform: translateY(-3px);
-            color: #0e5b44;
-        }
-        .about-avatar {
-            flex: 1;
-            text-align: center;
-        }
-        .about-avatar i {
-            font-size: 5rem;
-            color: #2c8c6e;
-            background: #e0f0e8;
-            padding: 1rem;
-            border-radius: 60%;
-        }
-
+        .contact-icons a:hover { background: #d4e8df; transform: translateY(-3px); }
         .footer {
             text-align: center;
             margin-top: 3rem;
-            padding: 2rem 1rem;
+            padding: 2rem;
             border-top: 1px solid #d4e2da;
             color: #4f7b68;
             font-size: 0.85rem;
         }
-        .no-result {
-            text-align: center;
-            padding: 2rem;
-            background: white;
-            border-radius: 1.5rem;
-            color: #5e8b78;
-            grid-column: 1 / -1;
-        }
+        .no-result { text-align: center; padding: 2rem; background: white; border-radius: 1.5rem; color: #5e8b78; grid-column: 1/-1; }
         @media (max-width: 680px) {
-            .container {
-                padding: 0 18px;
-            }
-            .hero h1 {
-                font-size: 2rem;
-            }
-            .section-title {
-                font-size: 1.5rem;
-            }
-            .search-wrapper {
-                justify-content: stretch;
-            }
-            .search-box {
-                width: 100%;
-            }
-            .search-box input {
-                width: 100%;
-            }
+            .container { padding: 0 18px; }
+            .hero h1 { font-size: 2rem; }
+            .search-wrapper { justify-content: stretch; }
+            .search-box { width: 100%; }
+            .search-box input { width: 100%; }
         }
     </style>
 </head>
 <body>
-
 <div class="hero">
     <div class="container">
-        <h1>
-            <i class="fas fa-flask"></i> EnzyMine
-        </h1>
-        <div class="tagline">
-            酶挖掘 · 理性设计 · 定向进化 · 酶工程工具箱
-        </div>
-        <div class="bio-badge">
-            <i class="fas fa-dna"></i> 聚焦工业酶改造 | 计算酶学 | 开源资源
-        </div>
+        <h1><i class="fas fa-flask"></i> EnzyMine</h1>
+        <div class="tagline">酶挖掘 · 理性设计 · 定向进化 · 酶工程工具箱</div>
+        <div class="bio-badge"><i class="fas fa-dna"></i> 聚焦工业酶改造 | 计算酶学 | 开源资源</div>
         <div class="nav-links">
             <a href="#knowledge"><i class="fas fa-book"></i> 酶知识</a>
             <a href="#methods"><i class="fas fa-brain"></i> 挖掘与改造方法</a>
             <a href="#tools"><i class="fas fa-toolbox"></i> 工具</a>
             <a href="#about"><i class="fas fa-user-astronaut"></i> 关于</a>
-            <a href="mailto:enzyme.design@enzymine.com"><i class="fas fa-envelope"></i> 交流合作</a>
+            <a href="mailto:wenxinsuixin@outlook.com"><i class="fas fa-envelope"></i> 交流合作</a>
         </div>
     </div>
 </div>
 
 <div class="container">
-    <!-- 板块一：酶知识 -->
+    <!-- ========= 板块一：酶知识（细分子板块） ========= -->
     <section id="knowledge">
-        <div class="section-title">
-            <i class="fas fa-book"></i>
-            <span>📚 酶知识 · 资源库</span>
-        </div>
-        <div id="knowledgeContainer" class="cards-grid">
-            <!-- 动态渲染酶知识卡片 -->
-        </div>
+        <div class="section-title"><i class="fas fa-book"></i><span>📚 酶知识 · 资源库</span></div>
+        <!-- 1.1 酶基础知识 -->
+        <div class="subsection-title"><i class="fas fa-dna"></i> 酶知识</div>
+        <div id="subEnzyme" class="cards-grid"></div>
+        <!-- 1.2 序列数据库 -->
+        <div class="subsection-title"><i class="fas fa-database"></i> 序列数据库</div>
+        <div id="subSeqDB" class="cards-grid"></div>
+        <!-- 1.3 结构数据库 -->
+        <div class="subsection-title"><i class="fas fa-cube"></i> 结构数据库</div>
+        <div id="subStructDB" class="cards-grid"></div>
+        <!-- 1.4 结构域数据库 -->
+        <div class="subsection-title"><i class="fas fa-project-diagram"></i> 结构域数据库</div>
+        <div id="subDomainDB" class="cards-grid"></div>
+        <!-- 1.5 专业酶数据库（P450、蛋白酶等） -->
+        <div class="subsection-title"><i class="fas fa-microscope"></i> 专业酶数据库</div>
+        <div id="subSpecialDB" class="cards-grid"></div>
     </section>
 
-    <!-- 板块二：挖掘与改造方法 -->
+    <!-- ========= 板块二：挖掘与改造方法（含原理、步骤、文献） ========= -->
     <section id="methods">
-        <div class="section-title">
-            <i class="fas fa-brain"></i>
-            <span>⚙️ 酶挖掘与改造 · 方法论</span>
-        </div>
-        <div id="methodsContainer" class="cards-grid">
-            <!-- 动态渲染方法卡片 -->
-        </div>
+        <div class="section-title"><i class="fas fa-brain"></i><span>⚙️ 酶挖掘与改造 · 方法论</span></div>
+        <div id="methodsContainer" class="cards-grid"></div>
     </section>
 
-    <!-- 板块三：工具区（带分类筛选和搜索） -->
+    <!-- ========= 板块三：工具区（大幅扩充） ========= -->
     <section id="tools">
-        <div class="section-title">
-            <i class="fas fa-toolbox"></i>
-            <span>🧪 酶工程工具箱</span>
-        </div>
-        <!-- 分类筛选栏 -->
+        <div class="section-title"><i class="fas fa-toolbox"></i><span>🧪 酶工程工具箱</span></div>
         <div class="tool-category-bar" id="toolCategoryBar">
             <button class="cat-btn active" data-cat="all"><i class="fas fa-tools"></i> 全部</button>
             <button class="cat-btn" data-cat="seq_search"><i class="fas fa-search"></i> 序列搜索</button>
@@ -400,223 +255,174 @@
             <button class="cat-btn" data-cat="physchem"><i class="fas fa-chart-bar"></i> 理化性质</button>
             <button class="cat-btn" data-cat="kinetics"><i class="fas fa-chart-line"></i> 酶动力学</button>
         </div>
-        <div class="search-wrapper">
-            <div class="search-box">
-                <i class="fas fa-search"></i>
-                <input type="text" id="toolSearchInput" placeholder="搜索工具 / 数据库..." autocomplete="off">
-            </div>
-        </div>
-        <div id="toolsContainer" class="cards-grid">
-            <!-- 动态渲染 -->
-        </div>
+        <div class="search-wrapper"><div class="search-box"><i class="fas fa-search"></i><input type="text" id="toolSearchInput" placeholder="搜索工具名称/描述..."></div></div>
+        <div id="toolsContainer" class="cards-grid"></div>
     </section>
 
-    <!-- 关于 / 个人 -->
+    <!-- 关于部分保持不变但稍改内容 -->
     <section id="about">
-        <div class="section-title">
-            <i class="fas fa-user-circle"></i>
-            <span>🧬 关于 · 酶工程探索者</span>
-        </div>
+        <div class="section-title"><i class="fas fa-user-circle"></i><span>🧬 关于 · 酶工程探索者</span></div>
         <div class="about-card">
-            <div class="about-text">
-                <h3>Young <span style="font-size:1.2rem;">🧪</span></h3>
-                <p>微生物学博士，专注酶挖掘与设计，热爱将计算方法引入工业酶创制。<br>
-                EnzyMine 是一个完全免费的知识仓库，分享实用的方法和工具，助力酶工程研究者。</p>
-                <p><i class="fas fa-flask"></i> 擅长领域：计算机辅助蛋白质设计</p>
-                <div class="contact-icons">
-                    <a href="https://github.com/enzyminedesign" target="_blank"><i class="fab fa-github"></i></a>
-                    <a href="https://twitter.com/enzymine_lab" target="_blank"><i class="fab fa-twitter"></i></a>
-                    <a href="mailto:wenxinsuixin@outlook.com"><i class="fas fa-envelope"></i></a>
-                    <a href="#"><i class="fab fa-google-scholar"></i></a>
-                </div>
-                <p style="margin-top: 1rem; font-size: 0.85rem;"><i class="fas fa-hand-peace"></i> 欢迎推荐新颖工具或投稿案例，共同推动开源酶设计生态。</p>
-            </div>
-            <div class="about-avatar">
-                <i class="fas fa-dragon"></i>
-                <p style="margin-top: 0.6rem; font-weight: 500;">#EnzymeEngineering<br>#ComputationalDesign</p>
-            </div>
+            <div class="about-text"><h3>Young <span style="font-size:1.2rem;">🧪</span></h3><p>微生物学博士，专注酶挖掘与设计，热爱将计算方法引入工业酶创制。<br>EnzyMine 是完全免费的知识仓库，分享实用的方法和工具，助力酶工程研究者。</p><p><i class="fas fa-flask"></i> 擅长领域：计算机辅助蛋白质设计</p><div class="contact-icons"><a href="https://github.com/enzyminedesign" target="_blank"><i class="fab fa-github"></i></a><a href="https://twitter.com/enzymine_lab" target="_blank"><i class="fab fa-twitter"></i></a><a href="mailto:wenxinsuixin@outlook.com"><i class="fas fa-envelope"></i></a><a href="#"><i class="fab fa-google-scholar"></i></a></div><p style="margin-top:1rem;"><i class="fas fa-hand-peace"></i> 欢迎推荐新颖工具或案例。</p></div>
+            <div class="about-avatar"><i class="fas fa-dragon"></i><p style="margin-top:0.6rem;">#EnzymeEngineering<br>#ComputationalDesign</p></div>
         </div>
     </section>
 </div>
-
-<footer class="footer">
-    <div class="container">
-        <i class="fas fa-chart-line"></i> 持续更新 · 酶学驱动生物制造 | 无域名纯静态站 开放访问<br>
-        © 2025 EnzyMine | 所有外部链接归原作者所有，仅学术交流
-    </div>
-</footer>
+<footer class="footer"><div class="container"><i class="fas fa-chart-line"></i> 持续更新 · 酶学驱动生物制造 | 无域名纯静态站<br>© 2025 EnzyMine | 学术交流，链接归原作者</div></footer>
 
 <script>
-    function escapeHtml(str) { if (!str) return ''; return str.replace(/[&<>]/g, function(m) { if (m === '&') return '&amp;'; if (m === '<') return '&lt;'; if (m === '>') return '&gt;'; return m; }); }
+    function escapeHtml(str) { if(!str) return ''; return str.replace(/[&<>]/g, function(m){ if(m==='&') return '&amp;'; if(m==='<') return '&lt;'; if(m==='>') return '&gt;'; return m;}); }
 
-    // ================= 板块一：酶知识数据 =================
-    const knowledgeData = [
-        { name: "酶的分类", desc: "国际生物化学与分子生物学联合会(IUBMB)将酶分为六大类：氧化还原酶、转移酶、水解酶、裂合酶、异构酶、连接酶。最新EC 7类为转位酶(Translocases)。", link: "https://iubmb.qmul.ac.uk/enzyme/", icon: "fas fa-list-ul" },
-        { name: "BRENDA", desc: "世界上最全面的人工注释酶数据库，包含超过10万个酶、约167万篇文献，涵盖酶学性质、动力学、稳定性等综合信息。", link: "https://www.brenda-enzymes.org/", icon: "fas fa-database" },
-        { name: "CAZy", desc: "碳水化合物活性酶专业数据库，收录糖苷水解酶(GH)、糖基转移酶(GT)等家族，是工业酶挖掘的核心资源。", link: "http://www.cazy.org/", icon: "fas fa-cube" },
-        { name: "MEROPS", desc: "蛋白酶与抑制剂的权威数据库，详细提供肽酶分类、特异性及三维结构信息。", link: "https://www.ebi.ac.uk/merops/", icon: "fas fa-cut" },
-        { name: "UniProtKB", desc: "最全面的蛋白质序列与功能数据库，整合Swiss-Prot(人工注释)和TrEMBL(自动注释)，酶挖掘的基础资源。", link: "https://www.uniprot.org/", icon: "fas fa-database" },
-        { name: "NCBI Protein & RefSeq", desc: "NCBI蛋白数据库包含GenBank翻译、RefSeq及PDB等来源的序列；RefSeq提供非冗余、高质量参考蛋白序列。", link: "https://www.ncbi.nlm.nih.gov/protein", icon: "fas fa-dna" },
-        { name: "GenBank / ENA / DDBJ", desc: "国际核酸序列数据库协作体(INSDC)三大成员，收录所有公开DNA序列，是原始序列数据的核心存储库。", link: "https://www.ncbi.nlm.nih.gov/genbank/", icon: "fas fa-database" },
-        { name: "PDB (RCSB)", desc: "蛋白质数据银行，全球最大的实验确定生物大分子三维结构档案库，包含超过22万个实验结构。", link: "https://www.rcsb.org/", icon: "fas fa-cube" },
-        { name: "AlphaFold Database", desc: "与UniProt同步，提供超过2亿个高精度蛋白质结构预测模型，彻底改变结构生物学研究。", link: "https://alphafold.ebi.ac.uk/", icon: "fas fa-magic" },
-        { name: "PDBsum", desc: "PDB结构的图解数据库，提供折叠图、拓扑结构、配体结合位点等可视化摘要。", link: "https://www.ebi.ac.uk/thornton-srv/databases/pdbsum/", icon: "fas fa-chart-pie" },
-        { name: "Pfam (InterPro)", desc: "蛋白质结构域数据库，基于多序列比对隐马尔可夫模型(HMM)对蛋白质家族和结构域进行注释。", link: "https://www.ebi.ac.uk/interpro/", icon: "fas fa-project-diagram" },
-        { name: "CATH / SCOP2 / ECOD", desc: "基于结构的蛋白结构域分类数据库：CATH(类-构架-拓扑-同源)、SCOP2(结构分类)、ECOD(进化分类)。", link: "http://www.cathdb.info/", icon: "fas fa-chart-network" }
+    // ---------- 重新组织酶知识数据（细分5类）----------
+    const enzymeBasic = [
+        { name: "酶的分类", desc: "IUBMB将酶分为氧化还原酶、转移酶、水解酶、裂合酶、异构酶、连接酶及最新转位酶(EC 7)。", link: "https://iubmb.qmul.ac.uk/enzyme/", icon: "fas fa-list-ul" },
+        { name: "BRENDA", desc: "人工注释最全面的酶数据库，涵盖动力学、最适pH/温度、稳定性等。", link: "https://www.brenda-enzymes.org/", icon: "fas fa-database" },
+        { name: "Enzyme Nomenclature", desc: "IUBMB官方酶命名与EC编号查询系统。", link: "https://www.qmul.ac.uk/sbcs/iubmb/enzyme/", icon: "fas fa-tag" }
+    ];
+    const seqDatabases = [
+        { name: "UniProtKB", desc: "最权威蛋白序列数据库，含Swiss-Prot(手工注释)和TrEMBL。", link: "https://www.uniprot.org/", icon: "fas fa-database" },
+        { name: "NCBI Protein", desc: "包含RefSeq, PDB, GenBank翻译的蛋白序列，酶挖掘基石。", link: "https://www.ncbi.nlm.nih.gov/protein", icon: "fas fa-dna" },
+        { name: "GenBank/ENA/DDBJ", desc: "国际核酸序列合作数据库，原始DNA/RNA序列存储库。", link: "https://www.ncbi.nlm.nih.gov/genbank/", icon: "fas fa-database" },
+        { name: "RefSeq", desc: "非冗余、高质量参考序列数据库，覆盖基因组及蛋白。", link: "https://www.ncbi.nlm.nih.gov/refseq/", icon: "fas fa-check-circle" }
+    ];
+    const structDatabases = [
+        { name: "PDB (RCSB)", desc: "全球实验生物大分子结构档案，包含20万+晶体/NMR结构。", link: "https://www.rcsb.org/", icon: "fas fa-cube" },
+        { name: "AlphaFold DB", desc: "2亿+高精度蛋白质结构预测模型，覆盖绝大多数已知蛋白。", link: "https://alphafold.ebi.ac.uk/", icon: "fas fa-magic" },
+        { name: "PDBsum", desc: "PDB结构图解摘要，展示拓扑、配体结合及相互作用。", link: "https://www.ebi.ac.uk/thornton-srv/databases/pdbsum/", icon: "fas fa-chart-pie" },
+        { name: "SWISS-MODEL Repository", desc: "同源建模模型库，自动生成高质量结构模型。", link: "https://swissmodel.expasy.org/repository/", icon: "fas fa-cube" }
+    ];
+    const domainDatabases = [
+        { name: "Pfam (InterPro)", desc: "基于HMM的蛋白结构域家族数据库，覆盖大多数已知蛋白。", link: "https://www.ebi.ac.uk/interpro/", icon: "fas fa-project-diagram" },
+        { name: "CATH", desc: "蛋白质结构域分类数据库(类-构架-拓扑-同源)。", link: "http://www.cathdb.info/", icon: "fas fa-chart-network" },
+        { name: "SCOP2", desc: "结构分类数据库，描述蛋白结构进化关系。", link: "https://scop2.mrc-lmb.cam.ac.uk/", icon: "fas fa-share-alt" },
+        { name: "ECOD", desc: "进化蛋白结构域数据库，整合结构和序列信息。", link: "https://evolutionarydata.org/ecod/", icon: "fas fa-chart-line" }
+    ];
+    const specializedDB = [
+        { name: "CAZy", desc: "碳水化合物活性酶数据库，GH、GT、PL等家族。", link: "http://www.cazy.org/", icon: "fas fa-candy-cane" },
+        { name: "MEROPS", desc: "蛋白酶及抑制剂数据库，详细分类与底物特异性。", link: "https://www.ebi.ac.uk/merops/", icon: "fas fa-cut" },
+        { name: "P450 Database (CYP)", desc: "细胞色素P450工程数据库，序列与功能信息。", link: "https://cypdb.uef.fi/", icon: "fas fa-fire" },
+        { name: "Lipase Engineering Database", desc: "脂肪酶工程数据库，序列结构与突变数据。", link: "http://www.led.uni-stuttgart.de/", icon: "fas fa-oil-can" },
+        { name: "Kinase.com", desc: "蛋白激酶序列与分类资源。", link: "http://kinase.com/", icon: "fas fa-dna" }
     ];
 
-    // ================= 板块二：挖掘与改造方法数据 =================
-    const methodsData = [
-        { name: "基因组挖掘 (Genome Mining)", desc: "通过分析基因组序列预测酶功能，利用序列相似性、共表达分析及合成基因簇识别新酶。", link: "https://www.nature.com/articles/nbt.4232", tag: "酶挖掘", icon: "fas fa-dna" },
-        { name: "宏基因组挖掘", desc: "从环境样本总DNA中直接筛选酶基因，突破传统培养限制，发现新型耐热/耐盐/耐酸碱酶。代表性工具: Gene Surfing, SeqForge。", link: "https://pmc.ncbi.nlm.nih.gov/articles/PMC11891932/", tag: "酶挖掘", icon: "fas fa-microscope" },
-        { name: "序列相似性网络 (SSN)", desc: "基于序列相似性构建网络，使用EFI-EST等工具快速聚类同源序列，高效筛选功能多样性酶家族。", link: "https://efi.igb.illinois.edu/efi-est/", tag: "酶挖掘", icon: "fas fa-share-alt" },
-        { name: "机器学习辅助挖掘", desc: "利用ESM蛋白语言模型、ESM-Ezy等深度学习策略，从序列空间大规模筛选高性能酶。", link: "https://www.python88.com/", tag: "酶挖掘", icon: "fas fa-microchip" },
-        { name: "理性设计 (Rational Design)", desc: "基于酶的结构与催化机理，定点突变已知关键残基，精准改造酶的性质。", link: "https://www.nature.com/articles/s41592-020-0925-9", tag: "理性设计", icon: "fas fa-brain" },
-        { name: "半理性设计 (Semi-rational)", desc: "结合计算机预测(如FOLD-X)和饱和突变文库(CAST/ISM)，以有限文库覆盖有意义的序列空间。", link: "https://pubs.acs.org/doi/10.1021/cb4004804", tag: "半理性设计", icon: "fas fa-chart-simple" },
-        { name: "定向进化 (Directed Evolution)", desc: "易错PCR、DNA改组构建突变文库，结合高通量筛选获得工业性能提升的突变体。", link: "https://www.nature.com/articles/nrmicro3231", tag: "定向进化", icon: "fas fa-dice-d6" },
-        { name: "计算机辅助设计 (CAD)", desc: "整合同源建模、分子对接、MD模拟及ΔΔG计算，加速酶设计与筛选周期。代表性平台：Rosetta, FireProt。", link: "https://www.rosettacommons.org/", tag: "计算机辅助", icon: "fas fa-laptop-code" },
-        { name: "从头设计 (De novo Design)", desc: "不依赖于天然支架，从头设计全新酶的活性口袋与骨架。代表工作: RosettaDesign, ProteinMPNN, AI.zymes平台。", link: "https://www.biorxiv.org/", tag: "从头设计", icon: "fas fa-magic" },
-        { name: "深度学习辅助设计", desc: "利用ProteinMPNN、ESM-IF等生成模型，从零设计或重新编码酶分子，实现前所未有的催化功能。", link: "https://github.com/dauparas/ProteinMPNN", tag: "AI方法", icon: "fas fa-brain" }
-    ];
-
-    // ================= 板块三：酶工程工具箱数据（带分类） =================
-    const toolsData = [
-        { name: "BLAST", desc: "经典序列相似性搜索工具，用于同源酶挖掘与功能注释，支持核酸和蛋白质比对。", link: "https://blast.ncbi.nlm.nih.gov", icon: "fas fa-search", category: "seq_search" },
-        { name: "HMMER", desc: "基于隐马尔可夫模型的敏感序列搜索，适合远源同源检测及蛋白家族识别。", link: "https://www.ebi.ac.uk/Tools/hmmer/", icon: "fas fa-chart-line", category: "seq_search" },
-        { name: "MMseqs2", desc: "超快速且敏感的序列搜索与聚类工具，支持CPU/GPU加速，适用于大规模宏基因组数据。", link: "https://github.com/soedinglab/MMseqs2", icon: "fas fa-tachometer-alt", category: "seq_search" },
-        { name: "DIAMOND", desc: "高倍速BLAST替代工具，速度快数百倍，适用于宏基因组和转录组功能注释。", link: "https://github.com/bbuchfink/diamond", icon: "fas fa-bolt", category: "seq_search" },
-        { name: "Clustal Omega", desc: "大规模多序列比对工具，精度高，支持多线程，取代ClustalW。", link: "https://www.ebi.ac.uk/Tools/msa/clustalo/", icon: "fas fa-align-left", category: "msa" },
-        { name: "MAFFT", desc: "高准确性多序列比对，适合大规模蛋白/核酸比对，支持多种策略。", link: "https://mafft.cbrc.jp/alignment/software/", icon: "fas fa-align-justify", category: "msa" },
-        { name: "MUSCLE", desc: "快速多序列比对工具，适用于中等规模数据集，速度较ClustalW快。", link: "https://www.ebi.ac.uk/Tools/msa/muscle/", icon: "fas fa-grip-lines", category: "msa" },
-        { name: "T-Coffee", desc: "精确多序列比对工具，整合多种比对策略，准确性高，适合小型数据集。", link: "http://tcoffee.crg.cat/", icon: "fas fa-project-diagram", category: "msa" },
-        { name: "SWISS-MODEL", desc: "全自动同源建模平台，基于已知模板高效构建蛋白三维结构。", link: "https://swissmodel.expasy.org/", icon: "fas fa-cube", category: "structure" },
-        { name: "AlphaFold2", desc: "高精度蛋白结构预测，无需模板，通过Evoformer和结构模块生成原子级模型。", link: "https://colab.research.google.com/github/sokrypton/ColabFold/blob/main/AlphaFold2.ipynb", icon: "fas fa-magic", category: "structure" },
-        { name: "Rosetta", desc: "多功能分子建模套件，支持同源建模、蛋白设计、对接及自由能计算。", link: "https://www.rosettacommons.org/", icon: "fas fa-cogs", category: "structure" },
-        { name: "MODELLER", desc: "同源建模和比较建模工具，可用于缺失环区建模和多聚体构建。", link: "https://salilab.org/modeller/", icon: "fas fa-cube", category: "structure" },
-        { name: "MolProbity", desc: "蛋白结构验证工具，提供立体化学检验(拉氏图、clashscore等)。", link: "http://molprobity.biochem.duke.edu/", icon: "fas fa-check-circle", category: "structure" },
-        { name: "PROCHECK", desc: "拉氏图绘制与结构立体化学质量评估，早期经典验证工具。", link: "https://www.ebi.ac.uk/thornton-srv/software/PROCHECK/", icon: "fas fa-chart-scatter", category: "structure" },
-        { name: "AutoDock Vina", desc: "开源分子对接软件，速度快、精度高，广泛用于虚拟筛选。", link: "http://vina.scripps.edu/", icon: "fas fa-hand-peace", category: "docking" },
-        { name: "HADDOCK", desc: "信息驱动分子对接，支持整合生化数据，适合复杂蛋白质-蛋白质/配体复合物。", link: "https://wenmr.science.uu.nl/haddock2.4/", icon: "fas fa-chalkboard", category: "docking" },
-        { name: "GROMACS", desc: "高性能分子动力学模拟引擎，支持蛋白、核酸、脂质等生物大分子系统。", link: "https://www.gromacs.org/", icon: "fas fa-chart-line", category: "md" },
-        { name: "AMBER", desc: "生物分子模拟经典套件，提供力场参数及增强采样工具。", link: "https://ambermd.org/", icon: "fas fa-chart-line", category: "md" },
-        { name: "NAMD", desc: "高性能并行MD模拟程序，支持大型生物系统及增强采样算法。", link: "https://www.ks.uiuc.edu/Research/namd/", icon: "fas fa-microchip", category: "md" },
-        { name: "CHARMM-GUI", desc: "在线MD模拟准备平台，支持NAMD/GROMACS/AMBER输入文件生成。", link: "https://www.charmm-gui.org/", icon: "fas fa-laptop-code", category: "md" },
-        { name: "ProtParam", desc: "ExPASy理化参数计算工具，预测等电点(pI)、分子量、消光系数等。", link: "https://web.expasy.org/protparam/", icon: "fas fa-chart-bar", category: "physchem" },
-        { name: "PROSO II", desc: "基于支持向量机的蛋白溶解性预测服务器，可用于评估突变对溶解性影响。", link: "https://protein.bio.puc.cl/proso/", icon: "fas fa-fill-drip", category: "physchem" },
-        { name: "DeepSol", desc: "深度学习蛋白溶解性预测工具，整合序列和结构信息。", link: "https://github.com/josejimenezluna/DeepSol", icon: "fas fa-chart-line", category: "physchem" },
-        { name: "CatPred", desc: "深度学习框架，预测体外酶促动力学参数(包括kcat, Km, Ki)。", link: "https://www.nature.com/articles/s41467-025-56272-0", icon: "fas fa-chart-line", category: "kinetics" },
-        { name: "PreTKcat", desc: "预训练表示学习框架，精准预测酶催化效率kcat值。", link: "https://github.com/YourLab/PreTKcat", icon: "fas fa-brain", category: "kinetics" },
-        { name: "DeepMolecules", desc: "网页服务器，整合ESP/SPOT/TurNuP预测酶和转运体-小分子互作及kcat/Km。", link: "https://deepmolecules.app/", icon: "fas fa-microchip", category: "kinetics" }
-    ];
-
-    // 渲染酶知识卡片
-    function renderKnowledge() {
-        const container = document.getElementById("knowledgeContainer");
-        if (!container) return;
-        container.innerHTML = knowledgeData.map(k => `
-            <div class="card">
-                <div class="card-content">
-                    <div class="card-icon"><i class="${k.icon}"></i></div>
-                    <div class="card-title">${escapeHtml(k.name)}</div>
-                    <div class="card-desc">${escapeHtml(k.desc)}</div>
-                    <a href="${k.link}" class="card-link" target="_blank" rel="noopener noreferrer">访问资源 <i class="fas fa-arrow-right"></i></a>
-                </div>
-            </div>
+    function renderSubgrid(containerId, data) {
+        const container = document.getElementById(containerId);
+        if(container) container.innerHTML = data.map(item => `
+            <div class="card"><div class="card-content"><div class="card-icon"><i class="${item.icon}"></i></div><div class="card-title">${escapeHtml(item.name)}</div><div class="card-desc">${escapeHtml(item.desc)}</div><a href="${item.link}" class="card-link" target="_blank">访问资源 <i class="fas fa-arrow-right"></i></a></div></div>
         `).join("");
     }
 
-    // 渲染方法卡片
-    function renderMethods() {
+    // ---------- 改造方法：包含原理、步骤、文献 ----------
+    const methodsDetailed = [
+        { name: "基因组挖掘 (Genome Mining)", principle: "利用序列相似性、基因簇共线性及隐马尔可夫模型预测新酶基因。", steps: "1. 获取基因组数据→2. 功能注释(BLAST/HMMER)→3. 共表达分析→4. 异源表达验证。", reference: "Ziemert et al., Nat. Prod. Rep. 2016; DOI:10.1039/C5NP00125A", link: "https://www.nature.com/articles/nbt.4232", tag: "酶挖掘", icon: "fas fa-dna" },
+        { name: "宏基因组挖掘", principle: "直接从环境样本总DNA中扩增或筛选酶基因，避免培养依赖。", steps: "1. 提取环境DNA→2. 构建fosmid/cosmid文库→3. 功能或序列筛选→4. 高通量测序分析。", reference: "Handelsman, Microbiol. Mol. Biol. Rev. 2004; DOI:10.1128/MMBR.68.4.669-685.2004", link: "https://pmc.ncbi.nlm.nih.gov/articles/PMC11891932/", tag: "酶挖掘", icon: "fas fa-microscope" },
+        { name: "序列相似性网络 (SSN)", principle: "基于全对序列比对构建网络，通过聚类分析识别功能亚家族。", steps: "1. 同源序列收集→2. EFI-EST构建网络→3. Cytoscape可视化→4. 选代表性序列表征。", reference: "Gerlt, Biochemistry 2017; DOI:10.1021/acs.biochem.7b00764", link: "https://efi.igb.illinois.edu/efi-est/", tag: "酶挖掘", icon: "fas fa-share-alt" },
+        { name: "理性设计", principle: "基于酶三维结构与催化机理，精准改造活性位点残基。", steps: "1. 结构解析/同源建模→2. 识别关键残基→3. 定点突变→4. 活性验证与迭代。", reference: "Bornscheuer & Pohl, Curr. Opin. Chem. Biol. 2016; DOI:10.1016/j.cbpa.2016.05.014", link: "https://www.nature.com/articles/s41592-020-0925-9", tag: "理性设计", icon: "fas fa-brain" },
+        { name: "半理性设计", principle: "结合计算预测与饱和突变库，减少筛选文库规模。", steps: "1. 计算机预测热点残基(FoldX/Rosetta)→2. 构建CAST/ISM文库→3. 高通量筛选→4. 有益突变组合。", reference: "Reetz, Angew. Chem. Int. Ed. 2013; DOI:10.1002/anie.201204686", link: "https://pubs.acs.org/doi/10.1021/cb4004804", tag: "半理性设计", icon: "fas fa-chart-simple" },
+        { name: "定向进化", principle: "模拟自然进化，通过随机突变+筛选获得改良突变体。", steps: "1. 易错PCR/DNA改组构建文库→2. 表达与高通量筛选→3. 有益突变重组→4. 多轮进化。", reference: "Arnold, Angew. Chem. 2019; DOI:10.1002/anie.201900490", link: "https://www.nature.com/articles/nrmicro3231", tag: "定向进化", icon: "fas fa-dice-d6" },
+        { name: "计算机辅助设计", principle: "整合分子对接、MD模拟与自由能计算，虚拟筛选突变体。", steps: "1. 建模与质量评估→2. 对接底物/抑制剂→3. 突变扫描(ΔΔG)→4. MD验证稳定性。", reference: "Kiss et al., Chem. Rev. 2013; DOI:10.1021/cr300435d", link: "https://www.rosettacommons.org/", tag: "计算机辅助", icon: "fas fa-laptop-code" },
+        { name: "从头设计 (De novo)", principle: "基于物理/深度学习从头构建酶活性中心与骨架。", steps: "1. 定义催化框架→2. RosettaDesign/ProteinMPNN生成序列→3. 表达与筛选→4. 迭代优化。", reference: "Huang et al., Science 2016; DOI:10.1126/science.aad8855", link: "https://github.com/dauparas/ProteinMPNN", tag: "从头设计", icon: "fas fa-magic" },
+        { name: "深度学习辅助设计", principle: "利用ESM-IF, ProteinMPNN等生成模型，直接从序列空间设计新酶。", steps: "1. 目标功能定义→2. 模型生成序列→3. 结构预测验证→4. 实验表征。", reference: "Madani et al., Nat. Biotechnol. 2023; DOI:10.1038/s41587-023-01918-w", link: "https://github.com/dauparas/ProteinMPNN", tag: "AI方法", icon: "fas fa-brain" }
+    ];
+
+    function renderMethodsDetailed() {
         const container = document.getElementById("methodsContainer");
-        if (!container) return;
-        container.innerHTML = methodsData.map(m => `
+        if(!container) return;
+        container.innerHTML = methodsDetailed.map(m => `
             <div class="card">
                 <div class="card-content">
                     <div class="card-icon"><i class="${m.icon}"></i></div>
                     <div class="card-title">${escapeHtml(m.name)}</div>
-                    ${m.tag ? `<div class="method-tag"><i class="fas fa-tag"></i> ${escapeHtml(m.tag)}</div>` : ''}
-                    <div class="card-desc">${escapeHtml(m.desc)}</div>
-                    <a href="${m.link}" class="card-link" target="_blank" rel="noopener noreferrer">深入理解 <i class="fas fa-book-open"></i></a>
+                    <div class="method-tag"><i class="fas fa-tag"></i> ${escapeHtml(m.tag)}</div>
+                    <div class="card-desc"><strong>🔬 原理：</strong> ${escapeHtml(m.principle)}</div>
+                    <div class="method-steps"><i class="fas fa-list-ol"></i> <strong>步骤：</strong> ${escapeHtml(m.steps)}</div>
+                    <div class="method-references"><i class="fas fa-quote-right"></i> <strong>文献：</strong> ${escapeHtml(m.reference)}</div>
+                    <a href="${m.link}" class="card-link" target="_blank">深入理解 <i class="fas fa-book-open"></i></a>
                 </div>
             </div>
         `).join("");
     }
 
-    // 工具筛选与渲染
-    let currentCategory = "all";
-    let currentSearch = "";
+    // ---------- 工具数据：极大扩充（包含新工具）----------
+    let toolsData = [
+        // 序列搜索类 (扩充)
+        { name: "BLAST", desc: "经典局部比对搜索，用于同源酶挖掘。", link: "https://blast.ncbi.nlm.nih.gov", icon: "fas fa-search", category: "seq_search" },
+        { name: "PSI-BLAST", desc: "位点特异性迭代BLAST，检测远源同源序列。", link: "https://blast.ncbi.nlm.nih.gov/Blast.cgi?PAGE=Proteins", icon: "fas fa-search", category: "seq_search" },
+        { name: "HMMER", desc: "基于隐马尔可夫模型，敏感搜索蛋白家族。", link: "https://www.ebi.ac.uk/Tools/hmmer/", icon: "fas fa-chart-line", category: "seq_search" },
+        { name: "Jackhmmer", desc: "迭代HMM搜索，用于建立家族谱。", link: "https://www.ebi.ac.uk/Tools/hmmer/", icon: "fas fa-sync-alt", category: "seq_search" },
+        { name: "MMseqs2", desc: "超快聚类与搜索，适合宏基因组。", link: "https://github.com/soedinglab/MMseqs2", icon: "fas fa-tachometer-alt", category: "seq_search" },
+        { name: "DIAMOND", desc: "BLAST加速版本，速度快数百倍。", link: "https://github.com/bbuchfink/diamond", icon: "fas fa-bolt", category: "seq_search" },
+        { name: "RAPSearch2", desc: "快速蛋白质序列比对用于下一代测序。", link: "https://omics.informatics.indiana.edu/RAPSearch2/", icon: "fas fa-rocket", category: "seq_search" },
+        // 序列比对
+        { name: "Clustal Omega", desc: "大规模多序列比对，精度高。", link: "https://www.ebi.ac.uk/Tools/msa/clustalo/", icon: "fas fa-align-left", category: "msa" },
+        { name: "MAFFT", desc: "高准确度快速多序列比对。", link: "https://mafft.cbrc.jp/alignment/software/", icon: "fas fa-align-justify", category: "msa" },
+        { name: "MUSCLE", desc: "快速MSA工具，适于中等规模。", link: "https://www.ebi.ac.uk/Tools/msa/muscle/", icon: "fas fa-grip-lines", category: "msa" },
+        { name: "T-Coffee", desc: "高精度多序列比对，可整合结构信息。", link: "http://tcoffee.crg.cat/", icon: "fas fa-project-diagram", category: "msa" },
+        { name: "PROMALS3D", desc: "结合结构信息的多序列比对。", link: "http://prodata.swmed.edu/promals3d/", icon: "fas fa-cube", category: "msa" },
+        // 结构建模与评估
+        { name: "SWISS-MODEL", desc: "全自动同源建模。", link: "https://swissmodel.expasy.org/", icon: "fas fa-cube", category: "structure" },
+        { name: "AlphaFold2", desc: "高精度结构预测。", link: "https://colab.research.google.com/github/sokrypton/ColabFold/blob/main/AlphaFold2.ipynb", icon: "fas fa-magic", category: "structure" },
+        { name: "RoseTTAFold", desc: "三轨神经网络结构预测。", link: "https://robetta.bakerlab.org/", icon: "fas fa-brain", category: "structure" },
+        { name: "ESMFold", desc: "基于语言模型的全原子预测，速度极快。", link: "https://esmatlas.com/", icon: "fas fa-microchip", category: "structure" },
+        { name: "I-TASSER", desc: "自动蛋白结构预测与功能注释。", link: "https://zhanglab.dcmb.med.umich.edu/I-TASSER/", icon: "fas fa-cogs", category: "structure" },
+        { name: "Rosetta", desc: "多功能设计、对接与ΔΔG计算。", link: "https://www.rosettacommons.org/", icon: "fas fa-cogs", category: "structure" },
+        { name: "MODELLER", desc: "同源建模与环区建模。", link: "https://salilab.org/modeller/", icon: "fas fa-cube", category: "structure" },
+        { name: "MolProbity", desc: "结构验证工具，拉氏图等。", link: "http://molprobity.biochem.duke.edu/", icon: "fas fa-check-circle", category: "structure" },
+        { name: "PROCHECK", desc: "立体化学质量评估。", link: "https://www.ebi.ac.uk/thornton-srv/software/PROCHECK/", icon: "fas fa-chart-scatter", category: "structure" },
+        { name: "Verify3D", desc: "评估蛋白结构与序列的兼容性。", link: "https://saves.mbi.ucla.edu/", icon: "fas fa-chart-line", category: "structure" },
+        // 分子对接
+        { name: "AutoDock Vina", desc: "开源快速分子对接。", link: "http://vina.scripps.edu/", icon: "fas fa-hand-peace", category: "docking" },
+        { name: "HADDOCK", desc: "信息驱动对接，支持蛋白质-蛋白质/配体。", link: "https://wenmr.science.uu.nl/haddock2.4/", icon: "fas fa-chalkboard", category: "docking" },
+        { name: "ClusPro", desc: "蛋白-蛋白对接服务器。", link: "https://cluspro.org/", icon: "fas fa-users", category: "docking" },
+        { name: "HPEPDOCK", desc: "肽-蛋白对接专用。", link: "http://huanglab.phys.hust.edu.cn/hpepdock/", icon: "fas fa-hand-peace", category: "docking" },
+        { name: "SwarmDock", desc: "基于群体智能的蛋白对接。", link: "https://swarmdock.ucd.ie/", icon: "fas fa-swarm", category: "docking" },
+        // 动力学模拟
+        { name: "GROMACS", desc: "高性能分子动力学模拟。", link: "https://www.gromacs.org/", icon: "fas fa-chart-line", category: "md" },
+        { name: "AMBER", desc: "分子模拟经典套件。", link: "https://ambermd.org/", icon: "fas fa-chart-line", category: "md" },
+        { name: "NAMD", desc: "高性能并行MD模拟。", link: "https://www.ks.uiuc.edu/Research/namd/", icon: "fas fa-microchip", category: "md" },
+        { name: "OpenMM", desc: "GPU加速MD引擎，可定制。", link: "http://openmm.org/", icon: "fas fa-chart-line", category: "md" },
+        { name: "CHARMM-GUI", desc: "在线MD输入文件生成器。", link: "https://www.charmm-gui.org/", icon: "fas fa-laptop-code", category: "md" },
+        // 理化性质预测
+        { name: "ProtParam", desc: "ExPASy工具，预测pI、分子量、消光系数。", link: "https://web.expasy.org/protparam/", icon: "fas fa-chart-bar", category: "physchem" },
+        { name: "PROSO II", desc: "蛋白溶解性预测。", link: "https://protein.bio.puc.cl/proso/", icon: "fas fa-fill-drip", category: "physchem" },
+        { name: "DeepSol", desc: "深度学习溶解度预测。", link: "https://github.com/josejimenezluna/DeepSol", icon: "fas fa-chart-line", category: "physchem" },
+        { name: "NetSolP", desc: "基于神经网络的溶解度预测。", link: "https://services.healthtech.dtu.dk/service.php?NetSolP-1.0", icon: "fas fa-brain", category: "physchem" },
+        { name: "SolPro", desc: "支持向量机溶解性预测。", link: "https://www.ibi.vu.nl/programs/solprowww/", icon: "fas fa-chart-line", category: "physchem" },
+        { name: "ProtScale", desc: "计算疏水性、亲水性等多种理化参数。", link: "https://web.expasy.org/protscale/", icon: "fas fa-chart-simple", category: "physchem" },
+        // 酶动力学预测
+        { name: "CatPred", desc: "深度学习预测kcat, Km, Ki。", link: "https://www.nature.com/articles/s41467-025-56272-0", icon: "fas fa-chart-line", category: "kinetics" },
+        { name: "PreTKcat", desc: "预训练模型预测催化效率kcat。", link: "https://github.com/YourLab/PreTKcat", icon: "fas fa-brain", category: "kinetics" },
+        { name: "DeepMolecules", desc: "预测酶-小分子互作及动力学参数。", link: "https://deepmolecules.app/", icon: "fas fa-microchip", category: "kinetics" },
+        { name: "DLKcat", desc: "深度学习kcat预测服务器。", link: "https://github.com/Shen-Lab/DLKcat", icon: "fas fa-chart-line", category: "kinetics" },
+        { name: "EnzymeMiner", desc: "自动化挖掘酶序列并预测催化效率。", link: "https://github.com/EnzymeMiner", icon: "fas fa-digging", category: "kinetics" }
+    ];
 
+    let currentCategory = "all", currentSearch = "";
     function renderTools() {
         const container = document.getElementById("toolsContainer");
-        if (!container) return;
+        if(!container) return;
         let filtered = toolsData;
-        if (currentCategory !== "all") {
-            filtered = filtered.filter(t => t.category === currentCategory);
-        }
-        if (currentSearch.trim() !== "") {
-            const lower = currentSearch.toLowerCase();
-            filtered = filtered.filter(t => t.name.toLowerCase().includes(lower) || t.desc.toLowerCase().includes(lower));
-        }
-        if (filtered.length === 0) {
-            container.innerHTML = `<div class="no-result"><i class="fas fa-info-circle"></i> 未找到匹配工具，试试其他关键词或分类～</div>`;
-            return;
-        }
-        container.innerHTML = filtered.map(tool => `
-            <div class="card">
-                <div class="card-content">
-                    <div class="card-icon"><i class="${tool.icon}"></i></div>
-                    <div class="card-title">${escapeHtml(tool.name)}</div>
-                    <div class="tool-tag"><i class="fas fa-folder-open"></i> ${tool.category === 'seq_search'?'序列搜索':tool.category==='msa'?'序列比对':tool.category==='structure'?'建模与评估':tool.category==='docking'?'分子对接':tool.category==='md'?'动力学模拟':tool.category==='physchem'?'理化性质预测':'酶动力学预测'}</div>
-                    <div class="card-desc">${escapeHtml(tool.desc)}</div>
-                    <a href="${tool.link}" class="card-link" target="_blank" rel="noopener noreferrer">访问工具 <i class="fas fa-arrow-right"></i></a>
-                </div>
-            </div>
-        `).join("");
+        if(currentCategory !== "all") filtered = filtered.filter(t => t.category === currentCategory);
+        if(currentSearch.trim()) { const lower = currentSearch.toLowerCase(); filtered = filtered.filter(t => t.name.toLowerCase().includes(lower) || t.desc.toLowerCase().includes(lower)); }
+        if(filtered.length===0) { container.innerHTML = `<div class="no-result"><i class="fas fa-info-circle"></i> 未找到工具，试试其他分类</div>`; return; }
+        container.innerHTML = filtered.map(tool => {
+            let catName = {seq_search:"序列搜索", msa:"序列比对", structure:"建模与评估", docking:"分子对接", md:"动力学模拟", physchem:"理化性质", kinetics:"酶动力学"}[tool.category];
+            return `<div class="card"><div class="card-content"><div class="card-icon"><i class="${tool.icon}"></i></div><div class="card-title">${escapeHtml(tool.name)}</div><div class="tool-tag"><i class="fas fa-folder-open"></i> ${catName}</div><div class="card-desc">${escapeHtml(tool.desc)}</div><a href="${tool.link}" class="card-link" target="_blank">访问工具 <i class="fas fa-arrow-right"></i></a></div></div>`;
+        }).join("");
     }
+    function updateActiveCategory(cat) { document.querySelectorAll('.cat-btn').forEach(btn => { if(btn.getAttribute('data-cat')===cat) btn.classList.add('active'); else btn.classList.remove('active'); }); }
 
-    function updateActiveCategory(cat) {
-        document.querySelectorAll('.cat-btn').forEach(btn => {
-            if (btn.getAttribute('data-cat') === cat) btn.classList.add('active');
-            else btn.classList.remove('active');
-        });
-    }
-
-    document.addEventListener("DOMContentLoaded", function() {
-        renderKnowledge();
-        renderMethods();
+    document.addEventListener("DOMContentLoaded", () => {
+        renderSubgrid("subEnzyme", enzymeBasic);
+        renderSubgrid("subSeqDB", seqDatabases);
+        renderSubgrid("subStructDB", structDatabases);
+        renderSubgrid("subDomainDB", domainDatabases);
+        renderSubgrid("subSpecialDB", specializedDB);
+        renderMethodsDetailed();
         renderTools();
-
-        // 分类筛选器事件
-        const catBtns = document.querySelectorAll('.cat-btn');
-        catBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                currentCategory = btn.getAttribute('data-cat');
-                updateActiveCategory(currentCategory);
-                renderTools();
-            });
-        });
-
-        // 搜索输入
-        const searchInput = document.getElementById("toolSearchInput");
-        if (searchInput) {
-            searchInput.addEventListener("input", (e) => {
-                currentSearch = e.target.value;
-                renderTools();
-            });
-        }
-    });
-
-    // 平滑锚点滚动
-    document.querySelectorAll('.nav-links a, .hero .nav-links a').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-            const href = this.getAttribute('href');
-            if (href && href.startsWith('#')) {
-                e.preventDefault();
-                const targetId = href.substring(1);
-                const targetElem = document.getElementById(targetId);
-                if (targetElem) targetElem.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
-        });
+        document.querySelectorAll('.cat-btn').forEach(btn => btn.addEventListener('click', () => { currentCategory = btn.getAttribute('data-cat'); updateActiveCategory(currentCategory); renderTools(); }));
+        document.getElementById("toolSearchInput")?.addEventListener("input", (e) => { currentSearch = e.target.value; renderTools(); });
+        document.querySelectorAll('.nav-links a').forEach(anchor => { anchor.addEventListener('click', function(e) { const href = this.getAttribute('href'); if(href && href.startsWith('#')) { e.preventDefault(); document.getElementById(href.substring(1))?.scrollIntoView({ behavior: 'smooth', block: 'start' }); } }); });
     });
 </script>
 </body>
