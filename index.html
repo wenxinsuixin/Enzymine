@@ -211,6 +211,7 @@
             <button class="cat-btn" data-knowledge-cat="struct"><i class="fas fa-cube"></i> 结构数据库</button>
             <button class="cat-btn" data-knowledge-cat="domain"><i class="fas fa-project-diagram"></i> 结构域数据库</button>
             <button class="cat-btn" data-knowledge-cat="special"><i class="fas fa-microscope"></i> 专业酶数据库</button>
+            <button class="cat-btn" data-knowledge-cat="ligand"><i class="fas fa-capsules"></i> 配体/化合物库</button>
         </div>
         <div id="knowledgeContainer" class="cards-grid"></div>
     </section>
@@ -235,6 +236,9 @@
             <button class="cat-btn" data-tool-cat="md"><i class="fas fa-chart-line"></i> 动力学模拟</button>
             <button class="cat-btn" data-tool-cat="physchem"><i class="fas fa-chart-bar"></i> 理化性质</button>
             <button class="cat-btn" data-tool-cat="kinetics"><i class="fas fa-chart-line"></i> 酶动力学</button>
+            <button class="cat-btn" data-tool-cat="structure_analysis"><i class="fas fa-eye"></i> 结构分析</button>
+            <button class="cat-btn" data-tool-cat="phylogeny"><i class="fas fa-project-diagram"></i> 进化树</button>
+            <button class="cat-btn" data-tool-cat="conversion"><i class="fas fa-exchange-alt"></i> 格式转换</button>
         </div>
         <div class="search-wrapper"><div class="search-box"><i class="fas fa-search"></i><input type="text" id="toolSearchInput" placeholder="搜索工具名称/描述..."></div></div>
         <div id="toolsContainer" class="cards-grid"></div>
@@ -262,37 +266,43 @@
 <script>
     function escapeHtml(str) { if(!str) return ''; return str.replace(/[&<>]/g, function(m){ if(m==='&') return '&amp;'; if(m==='<') return '&lt;'; if(m==='>') return '&gt;'; return m;}); }
 
-    // ================= 酶知识数据（已扩充） =================
+    // ================= 酶知识数据（已扩充，含配体库） =================
     const knowledgeItems = [
-        // 原有条目（basic）
+        // 原有basic
         { name: "酶的分类", desc: "IUBMB将酶分为氧化还原酶、转移酶、水解酶、裂合酶、异构酶、连接酶及最新转位酶(EC 7)。", link: "https://iubmb.qmul.ac.uk/enzyme/", icon: "fas fa-list-ul", category: "basic" },
         { name: "BRENDA", desc: "人工注释最全面的酶数据库，涵盖动力学、最适pH/温度、稳定性等。", link: "https://www.brenda-enzymes.org/", icon: "fas fa-database", category: "basic" },
         { name: "Enzyme Nomenclature", desc: "IUBMB官方酶命名与EC编号查询系统。", link: "https://www.qmul.ac.uk/sbcs/iubmb/enzyme/", icon: "fas fa-tag", category: "basic" },
-        // 新增basic: 酶动力学数据库
         { name: "Kinetic Constants (Sabio-RK)", desc: "系统化收集酶动力学参数（Km, kcat等），支持查询与比较。", link: "https://sabio.h-its.org/", icon: "fas fa-chart-line", category: "basic" },
         { name: "EzCatDB", desc: "酶催化机制数据库，包含详细反应机理与关键残基信息。", link: "https://ezcatdb.cbrc.jp/EzCatDB/", icon: "fas fa-flask", category: "basic" },
-        // 序列数据库（原有 + 新增）
+        // 序列数据库
         { name: "UniProtKB", desc: "最权威蛋白序列数据库，含Swiss-Prot(手工注释)和TrEMBL。", link: "https://www.uniprot.org/", icon: "fas fa-database", category: "seq" },
         { name: "NCBI Protein", desc: "包含RefSeq, PDB, GenBank翻译的蛋白序列，酶挖掘基石。", link: "https://www.ncbi.nlm.nih.gov/protein", icon: "fas fa-dna", category: "seq" },
         { name: "GenBank/ENA/DDBJ", desc: "国际核酸序列合作数据库，原始DNA/RNA序列存储库。", link: "https://www.ncbi.nlm.nih.gov/genbank/", icon: "fas fa-database", category: "seq" },
         { name: "RefSeq", desc: "非冗余、高质量参考序列数据库，覆盖基因组及蛋白。", link: "https://www.ncbi.nlm.nih.gov/refseq/", icon: "fas fa-check-circle", category: "seq" },
         { name: "MGnify", desc: "宏基因组序列数据库，提供大量环境微生物的蛋白序列用于酶挖掘。", link: "https://www.ebi.ac.uk/metagenomics/", icon: "fas fa-globe", category: "seq" },
-        // 结构数据库（原有 + 新增）
+        // 结构数据库
         { name: "PDB (RCSB)", desc: "全球实验生物大分子结构档案，包含20万+晶体/NMR结构。", link: "https://www.rcsb.org/", icon: "fas fa-cube", category: "struct" },
         { name: "AlphaFold DB", desc: "2亿+高精度蛋白质结构预测模型，覆盖绝大多数已知蛋白。", link: "https://alphafold.ebi.ac.uk/", icon: "fas fa-magic", category: "struct" },
         { name: "PDBsum", desc: "PDB结构图解摘要，展示拓扑、配体结合及相互作用。", link: "https://www.ebi.ac.uk/thornton-srv/databases/pdbsum/", icon: "fas fa-chart-pie", category: "struct" },
         { name: "SASBDB", desc: "小角度散射数据库，提供溶液中的结构低分辨率信息。", link: "https://www.sasbdb.org/", icon: "fas fa-chart-area", category: "struct" },
-        // 结构域数据库（原有 + 新增）
+        // 结构域数据库
         { name: "Pfam (InterPro)", desc: "基于HMM的蛋白结构域家族数据库，覆盖大多数已知蛋白。", link: "https://www.ebi.ac.uk/interpro/", icon: "fas fa-project-diagram", category: "domain" },
         { name: "CATH", desc: "蛋白质结构域分类数据库(类-构架-拓扑-同源)。", link: "http://www.cathdb.info/", icon: "fas fa-chart-network", category: "domain" },
         { name: "SUPERFAMILY", desc: "基于结构域SCOP分类的蛋白注释数据库。", link: "https://supfam.org/", icon: "fas fa-sitemap", category: "domain" },
-        // 专业酶数据库（原有 + 新增）
+        // 专业酶数据库
         { name: "CAZy", desc: "碳水化合物活性酶数据库，GH、GT、PL等家族。", link: "http://www.cazy.org/", icon: "fas fa-candy-cane", category: "special" },
         { name: "MEROPS", desc: "蛋白酶及抑制剂数据库，详细分类与底物特异性。", link: "https://www.ebi.ac.uk/merops/", icon: "fas fa-cut", category: "special" },
         { name: "ESTHER", desc: "酯酶、脂肪酶及相关α/β水解酶数据库。", link: "https://bioweb.supagro.inra.fr/esther/", icon: "fas fa-flask", category: "special" },
         { name: "CYPED", desc: "细胞色素P450工程数据库，聚焦酶的改造与突变数据。", link: "https://cyped.biosintetica.com/", icon: "fas fa-fire", category: "special" },
         { name: "KEGG ENZYME", desc: "京都基因与基因组百科全书中的酶条目，包含EC编号、反应与通路。", link: "https://www.kegg.jp/kegg/ko.html", icon: "fas fa-chart-network", category: "special" },
-        { name: "MetaCyc", desc: "代谢途径与酶数据库，含3500余种途径及关联酶。", link: "https://metacyc.org/", icon: "fas fa-chart-line", category: "special" }
+        { name: "MetaCyc", desc: "代谢途径与酶数据库，含3500余种途径及关联酶。", link: "https://metacyc.org/", icon: "fas fa-chart-line", category: "special" },
+        // 新增配体/化合物数据库
+        { name: "PubChem", desc: "美国NIH最大免费化学数据库，包含小分子、生物活性数据。", link: "https://pubchem.ncbi.nlm.nih.gov/", icon: "fas fa-capsules", category: "ligand" },
+        { name: "ChEMBL", desc: "手工注释的生物活性药物化学数据库。", link: "https://www.ebi.ac.uk/chembl/", icon: "fas fa-chart-line", category: "ligand" },
+        { name: "ZINC", desc: "用于虚拟筛选的商业化合物数据库（超过7亿种）。", link: "https://zinc.docking.org/", icon: "fas fa-database", category: "ligand" },
+        { name: "DrugBank", desc: "详细药物数据与靶点信息。", link: "https://go.drugbank.com/", icon: "fas fa-capsules", category: "ligand" },
+        { name: "BindingDB", desc: "蛋白-小分子结合亲和力数据。", link: "https://www.bindingdb.org/", icon: "fas fa-hand-peace", category: "ligand" },
+        { name: "PDB Ligand Expo", desc: "PDB小分子化学组分字典。", link: "https://ligand-expo.rcsb.org/", icon: "fas fa-cube", category: "ligand" }
     ];
 
     let currentKnowledgeCat = "all";
@@ -308,7 +318,7 @@
     }
     function updateKnowledgeCat(cat) { document.querySelectorAll('#knowledgeCategoryBar .cat-btn').forEach(btn => { if(btn.getAttribute('data-knowledge-cat')===cat) btn.classList.add('active'); else btn.classList.remove('active'); }); }
 
-    // ================= 方法数据（保持不变，已完备） =================
+    // ================= 方法数据 =================
     const methodsDetailed = [
         { name: "基因组挖掘 (Genome Mining)", principle: "利用序列相似性、基因簇共线性及隐马尔可夫模型预测新酶基因。", steps: "1. 获取基因组数据→2. 功能注释(BLAST/HMMER)→3. 共表达分析→4. 异源表达验证。", reference: "Ziemert et al., Nat. Prod. Rep. 2016; DOI:10.1039/C5NP00125A", link: "https://www.nature.com/articles/nbt.4232", tag: "酶挖掘", icon: "fas fa-dna" },
         { name: "宏基因组挖掘", principle: "直接从环境样本总DNA中扩增或筛选酶基因，避免培养依赖。", steps: "1. 提取环境DNA→2. 构建fosmid/cosmid文库→3. 功能或序列筛选→4. 高通量测序分析。", reference: "Handelsman, Microbiol. Mol. Biol. Rev. 2004; DOI:10.1128/MMBR.68.4.669-685.2004", link: "https://pmc.ncbi.nlm.nih.gov/articles/PMC11891932/", tag: "酶挖掘", icon: "fas fa-microscope" },
@@ -329,22 +339,22 @@
     }
 
     // ================= 工具数据（已大幅扩充，保留所有原有条目，仅追加新工具） =================
+    // 原有工具数据量较大，此处合并展示并追加新分类
     const toolsData = [
-        // 序列搜索（原有）
+        // ---------- 序列搜索 ----------
         { name: "BLAST", desc: "经典局部比对搜索，用于同源酶挖掘。", link: "https://blast.ncbi.nlm.nih.gov", icon: "fas fa-search", category: "seq_search" },
         { name: "PSI-BLAST", desc: "位点特异性迭代BLAST，检测远源同源序列。", link: "https://blast.ncbi.nlm.nih.gov/Blast.cgi?PAGE=Proteins", icon: "fas fa-search", category: "seq_search" },
         { name: "HMMER", desc: "基于隐马尔可夫模型，敏感搜索蛋白家族。", link: "https://www.ebi.ac.uk/Tools/hmmer/", icon: "fas fa-chart-line", category: "seq_search" },
         { name: "MMseqs2", desc: "超快聚类与搜索，适合宏基因组。", link: "https://github.com/soedinglab/MMseqs2", icon: "fas fa-tachometer-alt", category: "seq_search" },
         { name: "DIAMOND", desc: "BLAST加速版本，速度快数百倍。", link: "https://github.com/bbuchfink/diamond", icon: "fas fa-bolt", category: "seq_search" },
-        // 新增序列搜索
         { name: "HHblits", desc: "基于HMM-HMM迭代比对，远程同源检测利器。", link: "https://toolkit.tuebingen.mpg.de/tools/hhblits", icon: "fas fa-chart-line", category: "seq_search" },
-        // 序列比对（原有 + 新增）
+        // ---------- 序列比对 ----------
         { name: "Clustal Omega", desc: "大规模多序列比对，精度高。", link: "https://www.ebi.ac.uk/Tools/msa/clustalo/", icon: "fas fa-align-left", category: "msa" },
         { name: "MAFFT", desc: "高准确度快速多序列比对。", link: "https://mafft.cbrc.jp/alignment/software/", icon: "fas fa-align-justify", category: "msa" },
         { name: "MUSCLE", desc: "快速MSA工具，适于中等规模。", link: "https://www.ebi.ac.uk/Tools/msa/muscle/", icon: "fas fa-grip-lines", category: "msa" },
         { name: "T-Coffee", desc: "高精度多序列比对，可整合结构信息。", link: "http://tcoffee.crg.cat/", icon: "fas fa-project-diagram", category: "msa" },
         { name: "Kalign", desc: "轻量级快速多序列比对，适合几千条序列。", link: "https://www.ebi.ac.uk/Tools/msa/kalign/", icon: "fas fa-align-center", category: "msa" },
-        // 建模（原有 + 新增）
+        // ---------- 建模 ----------
         { name: "SWISS-MODEL", desc: "全自动同源建模平台。", link: "https://swissmodel.expasy.org/", icon: "fas fa-cube", category: "modeling" },
         { name: "AlphaFold2", desc: "高精度蛋白结构预测（ColabFold实现）。", link: "https://colab.research.google.com/github/sokrypton/ColabFold/blob/main/AlphaFold2.ipynb", icon: "fas fa-magic", category: "modeling" },
         { name: "RoseTTAFold", desc: "三轨神经网络结构预测。", link: "https://robetta.bakerlab.org/", icon: "fas fa-brain", category: "modeling" },
@@ -357,44 +367,70 @@
         { name: "AlphaFold3", desc: "Google DeepMind 最新版结构预测模型（官方GitHub，推理代码已开源）。", link: "https://github.com/google-deepmind/alphafold3", icon: "fas fa-magic", category: "modeling" },
         { name: "trRosetta", desc: "基于深度学习的快速结构预测，衍生自Rosetta。", link: "https://yanglab.nankai.edu.cn/trRosetta/", icon: "fas fa-chart-line", category: "modeling" },
         { name: "OmegaFold", desc: "大规模蛋白结构预测，无需MSA。", link: "https://github.com/HeliXonProtein/OmegaFold", icon: "fas fa-cube", category: "modeling" },
-        // 质量评估（原有 + 新增）
+        // ---------- 质量评估 ----------
         { name: "MolProbity", desc: "结构验证工具，拉氏图、clashscore等。", link: "http://molprobity.biochem.duke.edu/", icon: "fas fa-check-circle", category: "quality" },
         { name: "PROCHECK", desc: "立体化学质量评估。", link: "https://www.ebi.ac.uk/thornton-srv/software/PROCHECK/", icon: "fas fa-chart-scatter", category: "quality" },
         { name: "Verify3D", desc: "评估蛋白结构与序列的兼容性。", link: "https://saves.mbi.ucla.edu/", icon: "fas fa-chart-line", category: "quality" },
         { name: "ProSA-web", desc: "基于Z-score的蛋白模型整体质量评估。", link: "https://prosa.services.came.sbg.ac.at/prosa.php", icon: "fas fa-chart-bar", category: "quality" },
         { name: "ERRAT", desc: "评估非键原子相互作用的统计质量。", link: "https://saves.mbi.ucla.edu/", icon: "fas fa-chart-scatter", category: "quality" },
-        // 蛋白设计（原有 + 新增）
+        // ---------- 蛋白设计 ----------
         { name: "ProteinMPNN", desc: "鲁棒的深度学习蛋白质序列设计器，逆折叠骨干结构设计序列（需要本地运行）。", link: "https://github.com/dauparas/ProteinMPNN", icon: "fas fa-project-diagram", category: "design" },
         { name: "LigandMPNN", desc: "原子上下文条件蛋白质序列设计，适用于药物发现和酶工程（需要本地运行）。", link: "https://github.com/dauparas/LigandMPNN", icon: "fas fa-hand-peace", category: "design" },
         { name: "RFdiffusion", desc: "RosettaFold扩散模型，用于蛋白质骨架和功能位点从头生成（需要本地运行）。", link: "https://github.com/RosettaCommons/RFdiffusion", icon: "fas fa-cogs", category: "design" },
         { name: "HyperMPNN", desc: "专为高度热稳定蛋白设计的反相折叠模型，重训练自超嗜热菌数据，生成热稳定性偏向序列。", link: "https://github.com/meilerlab/HyperMPNN", icon: "fas fa-fire", category: "design" },
         { name: "ESM-IF (Inverse Folding)", desc: "基于ESM模型的逆折叠工具，从结构反推序列。", link: "https://github.com/facebookresearch/esm", icon: "fas fa-dna", category: "design" },
         { name: "ProteinSolver", desc: "基于图神经网络的蛋白质序列设计。", link: "https://github.com/microsoft/ProteinSolver", icon: "fas fa-brain", category: "design" },
-        // 分子对接（原有 + 新增）
+        // ---------- 分子对接 ----------
         { name: "AutoDock Vina", desc: "开源快速分子对接。", link: "http://vina.scripps.edu/", icon: "fas fa-hand-peace", category: "docking" },
         { name: "HADDOCK", desc: "信息驱动对接，支持蛋白质-蛋白质/配体。", link: "https://wenmr.science.uu.nl/haddock2.4/", icon: "fas fa-chalkboard", category: "docking" },
         { name: "ClusPro", desc: "蛋白-蛋白对接服务器。", link: "https://cluspro.org/", icon: "fas fa-users", category: "docking" },
         { name: "ZDOCK", desc: "经典蛋白-蛋白对接，快速刚性对接。", link: "https://zdock.umassmed.edu/", icon: "fas fa-cubes", category: "docking" },
         { name: "LightDock", desc: "灵活对接，支持整合实验约束。", link: "https://lightdock.org/", icon: "fas fa-sun", category: "docking" },
-        // 动力学模拟（原有 + 新增）
+        // ---------- 动力学模拟 ----------
         { name: "GROMACS", desc: "高性能分子动力学模拟。", link: "https://www.gromacs.org/", icon: "fas fa-chart-line", category: "md" },
         { name: "AMBER", desc: "分子模拟经典套件。", link: "https://ambermd.org/", icon: "fas fa-chart-line", category: "md" },
         { name: "NAMD", desc: "高性能并行MD模拟。", link: "https://www.ks.uiuc.edu/Research/namd/", icon: "fas fa-microchip", category: "md" },
         { name: "CHARMM-GUI", desc: "在线MD输入文件生成器。", link: "https://www.charmm-gui.org/", icon: "fas fa-laptop-code", category: "md" },
         { name: "OpenMM", desc: "GPU加速MD引擎，高可定制性。", link: "https://openmm.org/", icon: "fas fa-chart-line", category: "md" },
         { name: "CP2K", desc: "适用于生物分子和材料的量子/经典模拟。", link: "https://www.cp2k.org/", icon: "fas fa-microchip", category: "md" },
-        // 理化性质（原有 + 新增）
+        // ---------- 理化性质 ----------
         { name: "ProtParam", desc: "ExPASy工具，预测pI、分子量、消光系数。", link: "https://web.expasy.org/protparam/", icon: "fas fa-chart-bar", category: "physchem" },
         { name: "PROSO II", desc: "蛋白溶解性预测。", link: "https://protein.bio.puc.cl/proso/", icon: "fas fa-fill-drip", category: "physchem" },
         { name: "DeepSol", desc: "深度学习溶解度预测。", link: "https://github.com/josejimenezluna/DeepSol", icon: "fas fa-chart-line", category: "physchem" },
         { name: "IPC (isoelectric point calculator)", desc: "高精度等电点和电荷计算。", link: "https://isoelectric-point.org/", icon: "fas fa-chart-simple", category: "physchem" },
         { name: "Tm Predict", desc: "基于序列预测熔融温度(Tm)。", link: "https://tm.life.nctu.edu.tw/", icon: "fas fa-temperature-high", category: "physchem" },
-        // 酶动力学（原有 + 新增）
+        // ---------- 酶动力学 ----------
         { name: "CatPred", desc: "深度学习预测kcat, Km, Ki。", link: "https://www.nature.com/articles/s41467-025-56272-0", icon: "fas fa-chart-line", category: "kinetics" },
         { name: "DeepMolecules", desc: "预测酶-小分子互作及动力学参数。", link: "https://deepmolecules.app/", icon: "fas fa-microchip", category: "kinetics" },
         { name: "DLKcat", desc: "深度学习kcat预测服务器。", link: "https://github.com/Shen-Lab/DLKcat", icon: "fas fa-chart-line", category: "kinetics" },
         { name: "kcat Prediction (KM)", desc: "集成酶催化效率预测工具。", link: "https://kcatpred.biologie.uni-greifswald.de/", icon: "fas fa-chart-line", category: "kinetics" },
-        { name: "EnzymeCommit", desc: "深度学习预测酶促反应转化数kcat。", link: "https://github.com/EnzymeCommit/EnzymeCommit", icon: "fas fa-brain", category: "kinetics" }
+        { name: "EnzymeCommit", desc: "深度学习预测酶促反应转化数kcat。", link: "https://github.com/EnzymeCommit/EnzymeCommit", icon: "fas fa-brain", category: "kinetics" },
+        // ================= 新增三大分类 =================
+        // 1. 结构分析工具
+        { name: "TM-align", desc: "蛋白质结构比对算法，计算TM-score和RMSD。", link: "https://zhanggroup.org/TM-align/", icon: "fas fa-cube", category: "structure_analysis" },
+        { name: "PyMOL", desc: "最受欢迎的分子可视化软件（免费教育版）。", link: "https://pymol.org/2/", icon: "fas fa-eye", category: "structure_analysis" },
+        { name: "VMD", desc: "可视化分子动力学软件，功能强大。", link: "https://www.ks.uiuc.edu/Research/vmd/", icon: "fas fa-chart-line", category: "structure_analysis" },
+        { name: "UCSF Chimera", desc: "交互式分子可视化和分析工具。", link: "https://www.cgl.ucsf.edu/chimera/", icon: "fas fa-eye", category: "structure_analysis" },
+        { name: "ChimeraX", desc: "Chimera下一代版本，更快更现代。", link: "https://www.cgl.ucsf.edu/chimerax/", icon: "fas fa-eye", category: "structure_analysis" },
+        { name: "RING3", desc: "蛋白质结构中残基相互作用网络的在线工具。", link: "https://ring.biocomputingup.it/", icon: "fas fa-project-diagram", category: "structure_analysis" },
+        { name: "Arpeggio", desc: "计算蛋白质-配体相互作用和接口能量的工具。", link: "https://www.ebi.ac.uk/thornton-srv/software/Arpeggio/", icon: "fas fa-hand-peace", category: "structure_analysis" },
+        // 2. 进化树构建与美化
+        { name: "MEGA", desc: "集成分子进化遗传分析，图形化建树。", link: "https://www.megasoftware.net/", icon: "fas fa-tree", category: "phylogeny" },
+        { name: "IQ-TREE", desc: "快速高效的最大似然法建树。", link: "http://www.iqtree.org/", icon: "fas fa-chart-line", category: "phylogeny" },
+        { name: "FastTree", desc: "适合大型序列集的近似最大似然树。", link: "http://www.microbesonline.org/fasttree/", icon: "fas fa-tachometer-alt", category: "phylogeny" },
+        { name: "FigTree", desc: "美观的进化树可视化工具。", link: "https://github.com/rambaut/figtree/", icon: "fas fa-chart-bar", category: "phylogeny" },
+        { name: "iTOL", desc: "最流行的在线进化树美化与注释平台。", link: "https://itol.embl.de/", icon: "fas fa-palette", category: "phylogeny" },
+        { name: "ggtree", desc: "R包，基于ggplot2的进化树绘图。", link: "https://github.com/YuLab-SMU/ggtree", icon: "fab fa-r-project", category: "phylogeny" },
+        { name: "PhyML", desc: "经典最大似然法建树软件。", link: "https://www.atgc-montpellier.fr/phyml/", icon: "fas fa-chart-line", category: "phylogeny" },
+        { name: "MrBayes", desc: "贝叶斯法推断进化树。", link: "https://nbisweden.github.io/MrBayes/", icon: "fas fa-chart-scatter", category: "phylogeny" },
+        // 3. 文件格式转换工具
+        { name: "Open Babel", desc: "化学文件格式转换瑞士军刀，支持SMILES, PDB, MOL2等。", link: "https://openbabel.org/", icon: "fas fa-exchange-alt", category: "conversion" },
+        { name: "PDBx/mmCIF tools", desc: "官方cif转pdb工具集。", link: "https://github.com/rcsb/pdb-tools", icon: "fas fa-cube", category: "conversion" },
+        { name: "SMILES to 3D (Online)", desc: "在线SMILES转PDB/MOL2 (NCI)。", link: "https://cactus.nci.nih.gov/chemical/structure", icon: "fas fa-magic", category: "conversion" },
+        { name: "UCSF Chimera (built-in)", desc: "用Chimera/ChimeraX进行格式转换（CIF, PDB, MOL等）。", link: "https://www.cgl.ucsf.edu/chimera/", icon: "fas fa-eye", category: "conversion" },
+        { name: "PDBtools", desc: "Python脚本集，清理和转换PDB文件。", link: "https://github.com/haddocking/pdb-tools", icon: "fab fa-python", category: "conversion" },
+        { name: "CIF2PDB online", desc: "在线cif文件转pdb文件。", link: "https://cif2pdb.com/", icon: "fas fa-cloud-upload-alt", category: "conversion" },
+        { name: "RCSB PDB Mine", desc: "批处理下载和格式转换工具。", link: "https://www.rcsb.org/downloads", icon: "fas fa-database", category: "conversion" }
     ];
 
     let currentToolCat = "all", currentSearch = "";
@@ -405,7 +441,11 @@
         if(currentToolCat !== "all") filtered = filtered.filter(t => t.category === currentToolCat);
         if(currentSearch.trim()) { const lower = currentSearch.toLowerCase(); filtered = filtered.filter(t => t.name.toLowerCase().includes(lower) || t.desc.toLowerCase().includes(lower)); }
         if(filtered.length===0) { container.innerHTML = `<div class="no-result"><i class="fas fa-info-circle"></i> 未找到匹配工具</div>`; return; }
-        const catNames = { seq_search:"序列搜索", msa:"序列比对", modeling:"建模", quality:"质量评估", design:"蛋白设计", docking:"分子对接", md:"动力学模拟", physchem:"理化性质", kinetics:"酶动力学" };
+        const catNames = {
+            seq_search:"序列搜索", msa:"序列比对", modeling:"建模", quality:"质量评估",
+            design:"蛋白设计", docking:"分子对接", md:"动力学模拟", physchem:"理化性质",
+            kinetics:"酶动力学", structure_analysis:"结构分析", phylogeny:"进化树", conversion:"格式转换"
+        };
         container.innerHTML = filtered.map(tool => `<div class="card"><div class="card-content"><div class="card-icon"><i class="${tool.icon}"></i></div><div class="card-title">${escapeHtml(tool.name)}</div><div class="tool-tag"><i class="fas fa-folder-open"></i> ${catNames[tool.category]}</div><div class="card-desc">${escapeHtml(tool.desc)}</div><a href="${tool.link}" class="card-link" target="_blank">访问工具 <i class="fas fa-arrow-right"></i></a></div></div>`).join("");
     }
     function updateToolCat(cat) { document.querySelectorAll('#toolCategoryBar .cat-btn').forEach(btn => { if(btn.getAttribute('data-tool-cat')===cat) btn.classList.add('active'); else btn.classList.remove('active'); }); }
