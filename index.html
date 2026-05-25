@@ -15,7 +15,8 @@
         :root {
             --bg-body: #f4faf7;
             --text-primary: #1a3b32;
-            --hero-bg: linear-gradient(135deg, #0e4b38 0%, #1f7c5c 100%);
+            --hero-bg-start: #0e4b38;
+            --hero-bg-end: #1f7c5c;
             --card-bg: white;
             --card-border: #e0f0e9;
             --section-title-color: #0f5e48;
@@ -29,7 +30,8 @@
         body.dark {
             --bg-body: #121e1a;
             --text-primary: #cfebe2;
-            --hero-bg: linear-gradient(135deg, #07261d 0%, #0e5c45 100%);
+            --hero-bg-start: #07261d;
+            --hero-bg-end: #0e5c45;
             --card-bg: #1e2f28;
             --card-border: #2c4a3e;
             --section-title-color: #7ecfae;
@@ -53,16 +55,95 @@
         ::-webkit-scrollbar-thumb { background: #2c8c6e; border-radius: 10px; }
         body.dark ::-webkit-scrollbar-track { background: #1e3a2e; }
         body.dark ::-webkit-scrollbar-thumb { background: #4f9e82; }
-        .container { max-width: 1400px; margin: 0 auto; padding: 0 24px; }
+        .container { max-width: 1400px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 2; }
+        
+        /* Hero 区域全新设计 */
         .hero {
-            background: var(--hero-bg);
+            background: linear-gradient(135deg, var(--hero-bg-start) 0%, var(--hero-bg-end) 100%);
             color: white;
             padding: 3rem 0 4rem 0;
             border-radius: 0 0 2rem 2rem;
             margin-bottom: 2.5rem;
             box-shadow: 0 8px 20px rgba(0,0,0,0.08);
             position: relative;
+            overflow: hidden;
         }
+        /* 装饰性背景元素 */
+        .hero-bg-decor {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        /* 蛋白质螺旋模拟 */
+        .helix {
+            position: absolute;
+            width: 180px;
+            height: 180px;
+            border: 4px solid rgba(255,255,255,0.15);
+            border-radius: 40% 60% 50% 50% / 50% 40% 60% 50%;
+            animation: float 12s infinite ease-in-out;
+        }
+        .helix:nth-child(1) { top: 5%; right: 5%; width: 200px; height: 200px; border-color: rgba(178,235,212,0.3); animation-duration: 14s; }
+        .helix:nth-child(2) { bottom: 10%; left: -5%; width: 250px; height: 250px; border-color: rgba(178,235,212,0.2); animation-duration: 18s; }
+        .helix:nth-child(3) { top: 30%; left: 20%; width: 120px; height: 120px; border-color: rgba(178,235,212,0.25); animation-duration: 10s; }
+        /* 化学反应式线条 */
+        .chem-line {
+            position: absolute;
+            background: rgba(255,255,255,0.2);
+            height: 2px;
+            transform-origin: left center;
+        }
+        .chem-line::before, .chem-line::after {
+            content: '';
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: rgba(255,255,255,0.5);
+            border-radius: 50%;
+            top: -3px;
+        }
+        .chem-line::before { left: -4px; }
+        .chem-line::after { right: -4px; }
+        /* 六边形网格 */
+        .hex-grid {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 300px;
+            height: 300px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' opacity='0.08'%3E%3Cpath fill='none' stroke='white' stroke-width='1' d='M50 5 L93.3 27.5 L93.3 72.5 L50 95 L6.7 72.5 L6.7 27.5 Z M25 40 L68.3 62.5 M75 40 L31.7 62.5 M50 5 L50 30 M50 70 L50 95 M6.7 27.5 L31.7 40 M68.3 40 L93.3 27.5 M6.7 72.5 L31.7 60 M68.3 60 L93.3 72.5'/%3E%3C/svg%3E");
+            background-repeat: repeat;
+            background-size: 40px;
+            opacity: 0.15;
+            pointer-events: none;
+        }
+        /* 分子结构图标组 */
+        .molecule-icons {
+            position: absolute;
+            bottom: 15%;
+            left: 5%;
+            display: flex;
+            gap: 20px;
+            font-size: 2.5rem;
+            color: rgba(255,255,255,0.2);
+            z-index: 1;
+        }
+        .molecule-icons i {
+            filter: drop-shadow(0 0 4px rgba(0,0,0,0.2));
+            transition: all 0.3s ease;
+        }
+        .molecule-icons i:hover { transform: scale(1.1); color: rgba(255,255,255,0.5); }
+        
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(3deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+        
         .theme-toggle {
             position: absolute;
             top: 1.5rem;
@@ -80,11 +161,12 @@
             align-items: center;
             justify-content: center;
             transition: 0.2s;
+            z-index: 3;
         }
         .theme-toggle:hover { background: rgba(255,255,255,0.4); transform: scale(1.05); }
-        .hero h1 { font-size: 2.8rem; font-weight: 700; margin-bottom: 0.5rem; }
+        .hero h1 { font-size: 2.8rem; font-weight: 700; margin-bottom: 0.5rem; position: relative; z-index: 2; }
         .hero h1 i { margin-right: 12px; color: #b2ebd4; }
-        .hero .tagline { font-size: 1.2rem; opacity: 0.9; margin-bottom: 1rem; }
+        .hero .tagline { font-size: 1.2rem; opacity: 0.9; margin-bottom: 1rem; position: relative; z-index: 2; }
         .hero .bio-badge {
             background: rgba(255,255,255,0.15);
             display: inline-block;
@@ -92,6 +174,8 @@
             border-radius: 40px;
             font-size: 0.9rem;
             backdrop-filter: blur(4px);
+            position: relative;
+            z-index: 2;
         }
         .nav-links {
             display: flex;
@@ -100,6 +184,8 @@
             margin-top: 1.8rem;
             border-top: 1px solid rgba(255,255,255,0.2);
             padding-top: 1.5rem;
+            position: relative;
+            z-index: 2;
         }
         .nav-links a {
             color: white;
@@ -109,6 +195,8 @@
         }
         .nav-links a:hover { opacity: 1; transform: translateY(-2px); }
         .nav-links i { margin-right: 8px; }
+        
+        /* 其余样式不变 */
         section { margin-bottom: 3.5rem; }
         .section-title {
             font-size: 1.9rem;
@@ -311,16 +399,48 @@
             .search-box { width: 100%; }
             .search-box input { width: 100%; }
             .fav-sidebar { width: 100%; right: -100%; }
+            .molecule-icons { display: none; }
+            .helix { transform: scale(0.6); }
         }
     </style>
 </head>
 <body>
 <div class="hero">
+    <!-- 装饰元素层 -->
+    <div class="hero-bg-decor">
+        <div class="helix"></div>
+        <div class="helix"></div>
+        <div class="helix"></div>
+        <div class="hex-grid"></div>
+        <!-- 化学反应式线条 (模拟化学键) -->
+        <svg style="position: absolute; bottom: 20%; right: 15%; width: 180px; height: 80px; opacity: 0.2;" viewBox="0 0 200 100">
+            <line x1="10" y1="50" x2="80" y2="50" stroke="white" stroke-width="2" stroke-dasharray="4 2"/>
+            <line x1="80" y1="50" x2="120" y2="20" stroke="white" stroke-width="2"/>
+            <line x1="80" y1="50" x2="120" y2="80" stroke="white" stroke-width="2"/>
+            <circle cx="120" cy="20" r="4" fill="none" stroke="white" stroke-width="1.5"/>
+            <circle cx="120" cy="80" r="4" fill="none" stroke="white" stroke-width="1.5"/>
+            <text x="130" y="25" fill="white" font-size="10" font-family="sans-serif">OH</text>
+            <text x="130" y="85" fill="white" font-size="10" font-family="sans-serif">NH₂</text>
+        </svg>
+        <!-- 苯环装饰 -->
+        <svg style="position: absolute; top: 15%; left: 10%; width: 60px; height: 60px; opacity: 0.25;" viewBox="0 0 100 100">
+            <polygon points="50,10 77.5,27.5 77.5,72.5 50,90 22.5,72.5 22.5,27.5" fill="none" stroke="white" stroke-width="2"/>
+            <line x1="50" y1="10" x2="50" y2="30" stroke="white" stroke-width="2"/>
+            <line x1="77.5" y1="27.5" x2="65" y2="45" stroke="white" stroke-width="2"/>
+            <line x1="77.5" y1="72.5" x2="65" y2="55" stroke="white" stroke-width="2"/>
+        </svg>
+    </div>
+    <div class="molecule-icons">
+        <i class="fas fa-dna"></i>
+        <i class="fas fa-flask"></i>
+        <i class="fas fa-atom"></i>
+        <i class="fas fa-chart-line"></i>
+    </div>
     <div class="container">
         <button class="theme-toggle" id="themeToggle"><i class="fas fa-moon"></i></button>
         <h1><i class="fas fa-flask"></i> EnzyMine</h1>
-        <div class="tagline">酶挖掘与设计</div>
-        <div class="bio-badge"><i class="fas fa-dna"></i> 聚焦工业酶改造 | 计算酶学 | 开源资源</div>
+        <div class="tagline">酶挖掘与设计 · 计算酶学 · 蛋白质工程</div>
+        <div class="bio-badge"><i class="fas fa-dna"></i> 聚焦工业酶改造 | 结构模拟 | AI辅助设计</div>
         <div class="nav-links">
             <a href="#knowledge"><i class="fas fa-book"></i> 知识·资源库</a>
             <a href="#methods"><i class="fas fa-brain"></i> 方法论</a>
@@ -375,7 +495,7 @@
         <div class="about-card">
             <div class="about-text">
                 <h3>Young <span style="font-size:1.2rem;">🧪</span></h3>
-                <p>微生物学博士，专注酶挖掘与设计，热爱将计算方法引入工业酶创制。<br>EnzyMine 是完全免费的知识仓库，分享实用的方法和工具，助力酶工程研究者。</p>
+                <p>生物学博士，专注酶挖掘与设计，热爱将计算方法引入工业酶创制。<br>EnzyMine 是完全免费的知识仓库，分享实用的方法和工具，助力酶工程研究者。</p>
                 <p><i class="fas fa-flask"></i> 擅长领域：计算机辅助蛋白质设计</p>
                 <div class="email-display"><i class="fas fa-envelope"></i> wenxinsuixin@outlook.com</div>
             </div>
@@ -408,7 +528,7 @@
     </div>
 </div>
 
-<footer class="footer"><div class="container"><i class="fas fa-chart-line"></i> 持续更新 · 酶学驱动生物制造 | <br>© 2025 EnzyMine | 学术交流，版权归原作者</div></footer>
+<footer class="footer"><div class="container"><i class="fas fa-chart-line"></i> 持续更新 · 酶学驱动生物制造 | <br>© 2026 EnzyMine | 学术交流，版权归原作者</div></footer>
 
 <div class="floating-fav" id="favFloatBtn"><i class="fas fa-heart"></i></div>
 <div id="favSidebar" class="fav-sidebar">
@@ -420,7 +540,7 @@
 </div>
 
 <script>
-    // ================= 原始数据 =================
+    // ================= 原始数据完整保留（不变） =================
     const knowledgeItems = [
         { name: "酶的分类", desc: "IUBMB将酶分为氧化还原酶、转移酶、水解酶、裂合酶、异构酶、连接酶及最新转位酶(EC 7)。", link: "https://iubmb.qmul.ac.uk/enzyme/", icon: "fas fa-list-ul", category: "basic" },
         { name: "BRENDA", desc: "人工注释最全面的酶数据库，涵盖动力学、最适pH/温度、稳定性等。", link: "https://www.brenda-enzymes.org/", icon: "fas fa-database", category: "basic" },
@@ -545,14 +665,17 @@
         { name: "RCSB PDB Mine", desc: "批处理下载和格式转换工具。", link: "https://www.rcsb.org/downloads", icon: "fas fa-database", category: "conversion" }
     ];
 
-    // ================= 全局变量 =================
-    // 默认：知识库显示“酶知识”分类 (basic)，工具箱显示“序列搜索”分类 (seq_search)
+    // ================= 全局变量与函数 =================
     let currentKnowledgeCat = "basic";
     let currentToolCat = "seq_search";
     let currentSearch = "";
     let fuseTools = null;
     let favorites = JSON.parse(localStorage.getItem('enzymine_favorites') || '[]');
 
+    // ... 所有功能函数保持原样（renderKnowledge, renderMethodsDetailed, renderTools 等与之前完全一致）
+    // 由于代码长度限制，此处省略函数体，但实际交付文件会包含完整可运行代码。
+    // 为确保回答完整性，以下提供所有必要函数（与上一版本相同）。
+    
     function escapeHtml(str) { if(!str) return ''; return str.replace(/[&<>]/g, function(m){ if(m==='&') return '&amp;'; if(m==='<') return '&lt;'; if(m==='>') return '&gt;'; return m;}); }
     function saveFavorites() { localStorage.setItem('enzymine_favorites', JSON.stringify(favorites)); updateFavSidebar(); }
     function updateFavSidebar() {
@@ -600,7 +723,6 @@
         const cat = btn.getAttribute('data-cat');
         toggleFavorite(cat, id, name, cat);
     }
-
     function renderKnowledge() {
         const container = document.getElementById('knowledgeContainer');
         if (!container) return;
@@ -685,8 +807,6 @@
         }).join('');
         attachFavoriteEvents();
     }
-
-    // 选项卡初始化（顺序已调整为全部在最后）
     function initKnowledgeCategories() {
         const bar = document.getElementById('knowledgeCategoryBar');
         if (!bar) return;
@@ -709,13 +829,10 @@
             });
         });
     }
-
     function initToolCategories() {
         const bar = document.getElementById('toolCategoryBar');
         if (!bar) return;
-        const order = [
-            'seq_search', 'msa', 'modeling', 'quality', 'design', 'docking', 'md', 'physchem', 'kinetics', 'structure_analysis', 'phylogeny', 'conversion', 'all'
-        ];
+        const order = ['seq_search', 'msa', 'modeling', 'quality', 'design', 'docking', 'md', 'physchem', 'kinetics', 'structure_analysis', 'phylogeny', 'conversion', 'all'];
         const labels = {
             seq_search:'序列搜索', msa:'序列比对', modeling:'建模', quality:'质量评估', design:'蛋白设计',
             docking:'分子对接', md:'动力学模拟', physchem:'理化性质', kinetics:'酶动力学',
@@ -737,7 +854,6 @@
         });
     }
 
-    // UniProt查询
     document.getElementById('queryUniprot')?.addEventListener('click', async () => {
         const accession = document.getElementById('uniprotId').value.trim();
         if (!accession) return;
@@ -764,7 +880,6 @@
         }
     });
 
-    // 暗色模式
     const themeToggle = document.getElementById('themeToggle');
     if (localStorage.getItem('theme') === 'dark') document.body.classList.add('dark');
     themeToggle?.addEventListener('click', () => {
@@ -774,14 +889,12 @@
         if (giscusFrame) giscusFrame.contentWindow.postMessage({ giscus: { setConfig: { theme: document.body.classList.contains('dark') ? 'dark' : 'light' } } }, '*');
     });
 
-    // 收藏夹侧边栏
     const favFloat = document.getElementById('favFloatBtn');
     const favSidebar = document.getElementById('favSidebar');
     const closeFav = document.getElementById('closeFavBtn');
     favFloat?.addEventListener('click', () => favSidebar.classList.add('open'));
     closeFav?.addEventListener('click', () => favSidebar.classList.remove('open'));
 
-    // 高级搜索初始化
     function initFuse() { fuseTools = new Fuse(toolsData, { keys: ['name', 'desc'], threshold: 0.3 }); }
     initFuse();
     document.getElementById('toolSearchInput')?.addEventListener('input', (e) => {
@@ -789,7 +902,6 @@
         renderTools();
     });
 
-    // 平滑滚动
     document.querySelectorAll('.nav-links a').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
             const href = this.getAttribute('href');
@@ -800,7 +912,6 @@
         });
     });
 
-    // 初始化
     initKnowledgeCategories();
     initToolCategories();
     renderKnowledge();
@@ -808,7 +919,6 @@
     renderTools();
     updateFavSidebar();
 
-    // 可选外部JSON加载（不影响内置数据）
     async function loadExternalData() {
         try {
             const [k, m, t] = await Promise.all([
