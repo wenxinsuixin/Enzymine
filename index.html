@@ -185,9 +185,8 @@
             display: flex;
             flex-wrap: wrap;
             gap: 0.8rem;
-            margin: 2rem 0 0.5rem 0;
+            margin: 1rem 0 1.8rem 0;  /* 调整间距：上边距1rem，下边距1.8rem */
             padding: 0.5rem 0;
-            border-top: 1px solid var(--card-border);
             border-bottom: 1px solid var(--card-border);
         }
         .cat-btn {
@@ -337,8 +336,8 @@
     <!-- 知识区 -->
     <section id="knowledge">
         <div class="section-title"><i class="fas fa-book"></i><span>📚 知识·资源库</span></div>
+        <div class="category-bar" id="knowledgeCategoryBar"></div>  <!-- 选项卡紧跟在标题下方 -->
         <div id="knowledgeContainer" class="cards-grid"></div>
-        <div class="category-bar" id="knowledgeCategoryBar"></div>
     </section>
 
     <!-- 方法论 -->
@@ -350,11 +349,11 @@
     <!-- 工具箱 -->
     <section id="tools">
         <div class="section-title"><i class="fas fa-toolbox"></i><span>🧪 工具箱</span></div>
+        <div class="category-bar" id="toolCategoryBar"></div>  <!-- 选项卡紧跟在标题下方 -->
         <div class="search-wrapper">
             <div class="search-box"><i class="fas fa-search"></i><input type="text" id="toolSearchInput" placeholder="高级搜索 (支持模糊匹配)"></div>
         </div>
         <div id="toolsContainer" class="cards-grid"></div>
-        <div class="category-bar" id="toolCategoryBar"></div>
     </section>
 
     <!-- UniProt API 查询区 -->
@@ -409,7 +408,7 @@
     </div>
 </div>
 
-<footer class="footer"><div class="container"><i class="fas fa-chart-line"></i> 持续更新 · 酶学驱动生物制造 | <br>© 2026 EnzyMine | 学术交流，版权归原作者</div></footer>
+<footer class="footer"><div class="container"><i class="fas fa-chart-line"></i> 持续更新 · 酶学驱动生物制造 | <br>© 2025 EnzyMine | 学术交流，版权归原作者</div></footer>
 
 <div class="floating-fav" id="favFloatBtn"><i class="fas fa-heart"></i></div>
 <div id="favSidebar" class="fav-sidebar">
@@ -421,7 +420,7 @@
 </div>
 
 <script>
-    // ================= 数据定义（与之前完全一致，无删减） =================
+    // ================= 原始数据完整保留 =================
     const knowledgeItems = [
         { name: "酶的分类", desc: "IUBMB将酶分为氧化还原酶、转移酶、水解酶、裂合酶、异构酶、连接酶及最新转位酶(EC 7)。", link: "https://iubmb.qmul.ac.uk/enzyme/", icon: "fas fa-list-ul", category: "basic" },
         { name: "BRENDA", desc: "人工注释最全面的酶数据库，涵盖动力学、最适pH/温度、稳定性等。", link: "https://www.brenda-enzymes.org/", icon: "fas fa-database", category: "basic" },
@@ -546,7 +545,7 @@
         { name: "RCSB PDB Mine", desc: "批处理下载和格式转换工具。", link: "https://www.rcsb.org/downloads", icon: "fas fa-database", category: "conversion" }
     ];
 
-    // ================= 全局变量与函数 =================
+    // ================= 全局变量与功能函数 =================
     let currentKnowledgeCat = "all";
     let currentToolCat = "all";
     let currentSearch = "";
@@ -686,11 +685,10 @@
         attachFavoriteEvents();
     }
 
-    // 关键修改：调整选项卡顺序，将“全部”放在最后
+    // 选项卡顺序已调整：全部放在最后
     function initKnowledgeCategories() {
         const bar = document.getElementById('knowledgeCategoryBar');
         if (!bar) return;
-        // 顺序：酶知识、序列数据库、结构数据库、结构域数据库、专业酶数据库、配体/化合物库、全部
         const categories = [
             { value: 'basic', label: '酶知识', icon: 'dna' },
             { value: 'seq', label: '序列数据库', icon: 'database' },
@@ -714,7 +712,6 @@
     function initToolCategories() {
         const bar = document.getElementById('toolCategoryBar');
         if (!bar) return;
-        // 顺序：序列搜索、序列比对、建模、质量评估、蛋白设计、分子对接、动力学模拟、理化性质、酶动力学、结构分析、进化树、格式转换、全部
         const order = [
             'seq_search', 'msa', 'modeling', 'quality', 'design', 'docking', 'md', 'physchem', 'kinetics', 'structure_analysis', 'phylogeny', 'conversion', 'all'
         ];
